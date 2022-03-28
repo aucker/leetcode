@@ -18,4 +18,4 @@ impl Solution {
     }
 }
 
-// use floyed cycle
+// use floyed cycle, the time complexity is O(N)
