@@ -1,3 +1,4 @@
+// https://leetcode.com/problems/find-the-duplicate-number/
 impl Solution {
     pub fn find_duplicate(nums: Vec<i32>) -> i32 {
         let mut n = nums.len();
