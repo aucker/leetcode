@@ -7,5 +7,9 @@ name = "LeetCode_Solution"
 version = "0.1.0"
 
 [[package]]
+name = "contains-duplicate"
+version = "0.1.0"
+
+[[package]]
 name = "spiral-matrix"
 version = "0.1.0"
