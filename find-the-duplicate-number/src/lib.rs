@@ -1,0 +1,34 @@
+pub struct Solution {}
+
+// https://leetcode.com/problems/find-the-duplicate-number/
+impl Solution {
+    pub fn find_duplicate(nums: Vec<i32>) -> i32 {
+        let mut n = nums.len();
+        let mut fast = nums[nums[0] as usize];
+        let mut slow = nums[0];
+            
+        while fast != slow {
+            slow = nums[slow as usize];
+            fast = nums[nums[fast as usize] as usize];
+        }
+        fast = 0;
+        while fast != slow {
+            fast = nums[fast as usize]; 
+            slow = nums[slow as usize];
+        }
+        slow
+    }
+}
+
+// use floyed cycle, the time complexity is O(N)
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn it_works() {
+        // let result = 2 + 2;
+        let nums = vec![3,1,3,4,2];
+        assert_eq!(Solution::find_duplicate(nums), 3);
+    }
+}
