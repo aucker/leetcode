@@ -11,5 +11,13 @@ name = "contains-duplicate"
 version = "0.1.0"
 
 [[package]]
+name = "find-all-duplicates-in-an-array"
+version = "0.1.0"
+
+[[package]]
+name = "find-the-duplicate-number"
+version = "0.1.0"
+
+[[package]]
 name = "spiral-matrix"
 version = "0.1.0"

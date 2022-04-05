@@ -12,4 +12,7 @@ edition = "2021"
 members = [
     "spiral-matrix", #54
     "contains-duplicate",   #217
+    "find-the-duplicate-number",    #287
+    "find-all-duplicates-in-an-array",    #442
+    
     ]
