@@ -48,7 +48,7 @@ Each node in the tree can be one of three types:
 * **Root**: if the node is the root of the tree
 * **Inner**: if the node is neither a leaf node nor a root node.
 
-## Solution
+## Solution 1
 ```sql
 select id,
     case when p_id is null then "Root"
@@ -57,6 +57,16 @@ select id,
     from Tree
     order by id;
 ```
+## Solution 2
+```sql
+select id, 'Root' as type from Tree
+where p_id is null
+union
+select id, 
+if (id in (select p_id from Tree), 'Inner', 'Leaf') as type from Tree
+where p_id is not null;
+```
 
 ## Key
-Use `case when` in sql
+Use `case when` in sql in Solution 1
+Use `UNION` and `if` in Solution 2
