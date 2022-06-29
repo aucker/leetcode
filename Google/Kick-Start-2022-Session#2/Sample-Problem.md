@@ -58,7 +58,7 @@ func main() {
 		}
 		res = res % M
 		// fmt.Println("Case #", i, ":", res)
-		fmt.Printf("Case # %d: %d\n", i, res)
+		fmt.Printf("Case #%d: %d\n", i, res)
 	}
 }
 ```

@@ -1,5 +1,7 @@
 package main
+
 import "fmt"
+
 func main() {
 	var T int
 	fmt.Scanf("%d", &T)
@@ -20,6 +22,8 @@ func main() {
 		}
 		res = res % M
 		// fmt.Println("Case #", i, ":", res)
-		fmt.Printf("Case # %d: %d\n", i, res)
+		// fmt.Printf("Case #%d: %d\n", i, res)
+		s := fmt.Sprintf("Case #%d: %d\n", i, res)
+		fmt.Println(s)
 	}
 }
