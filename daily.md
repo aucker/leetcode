@@ -44,3 +44,19 @@ class Solution:
         
         return ''.join(result)
 ```
+
+### 2023-11-15 [leetcode 1846](https://leetcode.com/problems/maximum-element-after-decreasing-and-rearranging/description/?envType=daily-question&envId=2023-11-15)
+
+```cpp
+class Solution {
+public:
+  int maximumElementAfterDecrementingAndRearranging(vector<int>& arr) {
+    sort(arr.start(), arr.end());
+    int pre = 0;
+    for (int &a : arr)
+      pre = min(pre + 1, a);
+
+    return pre;
+  }
+}
+```
