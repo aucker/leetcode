@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Usage: ./codecheck mycpp.cpp
+
+if [ $# -ne 1 ]; then
+    echo "Usage: ./codecheck mycpp.cpp"
+    exit 1
+fi
+
+
+# 1. check all compilation error of my cpp file
+g++ -Wall -Wextra -Werror -std=c++11 -o compilerror $1 2> compilerror
+
+# 2. just check the syntax of cpp file
+g++ -fsyntax-only -std=c++11 $1

@@ -1,0 +1,36 @@
+#!/bin/bash
+
+echo "Enter filename:"
+read filename
+
+# Extract the base name
+base_name=$(basename "$filename" )
+
+# echo "base name: $base_name"
+
+# Define the extensions and directories
+extensions=("cpp" "py")
+directories=("cpp" "python")
+
+# Loop over the extensions and directories
+for i in ${!extensions[*]}; do
+    # Construct the new filename
+    new_filename="${base_name}.${extensions[$i]}"
+
+    # Check if the file already exists, if so, skip
+    # since touch will not overwrite the contents of the file
+    # but just update the timestamp, we do nothing here
+    if [ -f "${directories[$i]}/${new_filename}" ]; then
+        echo "File already exists"
+    fi
+
+    # Check if the current directory is daily/
+    # if not, go to daily/
+    if [ $(basename $(pwd)) != "daily" ]; then
+        cd daily
+    fi
+
+    # Create the new file in the current directory
+    touch "${directories[$i]}/${new_filename}"
+
+done
