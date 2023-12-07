@@ -9,8 +9,8 @@ base_name=$(basename "$filename" )
 # echo "base name: $base_name"
 
 # Define the extensions and directories
-extensions=("cpp" "py")
-directories=("cpp" "python")
+extensions=("cpp" "py" "rs")
+directories=("cpp" "python" "rust")
 
 # Loop over the extensions and directories
 for i in ${!extensions[*]}; do
