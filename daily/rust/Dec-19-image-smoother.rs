@@ -5,16 +5,29 @@ impl Solution {
         let col = img[0].len();
         let mut res = vec![vec![0; col]; row];
 
+        // for i in 0..row {
+        //     for j in 0..col {
+        //         let mut sum = 0;
+        //         let mut count = 0;
+        //         for x in i.saturating_sub(1)..=i + 1 {
+        //             for y in j.saturating_sub(1)..=j + 1 {
+        //                 if x < row && y < col {
+        //                     sum += img[x][y];
+        //                     count += 1;
+        //                 }
+        //             }
+        //         }
+        //         res[i][j] = sum / count;
+        //     }
+        // }
         for i in 0..row {
             for j in 0..col {
-                let mut sum = 0;
-                let mut count = 0;
-                for x in i.saturating_sub(1)..=i + 1 {
-                    for y in j.saturating_sub(1)..=j + 1 {
-                        if x < row && y < col {
-                            sum += img[x][y];
-                            count += 1;
-                        }
+                let (mut sum, mut count) = (0, 0);
+                
+                for x in (max(i as i32 - 1, 0) as usize)..(min(i as i32+2, row as i32) as usize) {
+                    for y in (max(j as i32 - 1, 0) as usize)..(min(j as i32+2, col as i32) as usize) {
+                        sum += img[x][y];
+                        count += 1;
                     }
                 }
                 res[i][j] = sum / count;
