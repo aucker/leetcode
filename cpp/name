@@ -1,0 +1,28 @@
+#!/bin/bash
+
+echo "Enter filename"
+read filename
+
+# Extract the base name
+# name=$(basename $filename)
+# name="hash/abc"
+
+# use regex to get the name before '/'
+foname=$(echo $filename | grep -oP '.*(?=/)')
+echo $fname
+# use regex to get the name after '/'
+finame=$(echo $filename | grep -oP '(?<=/).*')
+echo $finame
+
+cd cpp/$foname
+pwd
+
+new_filename="${finame}.cpp"
+echo $new_filename
+
+if [ -f $new_filename ]; then
+    echo "File already exists in $foname directory"
+else
+    touch $new_filename
+    echo "File created in $foname directory"
+fi
