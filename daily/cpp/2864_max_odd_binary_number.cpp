@@ -6,6 +6,7 @@ class Solution {
   string maximumOddBinaryNumber(string s) {
     /// O(NlogN) solution
     sort(s.rbegin(), s.rend());
+    // sort(s.begin(), s.end(), greater<char>());
     for (int i = s.size() - 1; i >= 0; --i) {
       if (s[i] == '1') {
         // we only need to swap the first 1 we encounter
