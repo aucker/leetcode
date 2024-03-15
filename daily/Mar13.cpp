@@ -150,11 +150,53 @@ class Solution {
     int buy = -prices[0];
     int sell = 0;
     for (int i = 0; i < n; ++i) {
+      // in buy, we get the min possible value
       buy = max(buy, -prices[i]);
-      sell = max(sell, sell + buy);
+      // to get the max profit, we hope to the min buy and max sell
+      // that's why we use max here
+      sell = max(sell, prices[i] + buy);
     }
     return sell;
   }
+
+  /**
+   * @brief another way to solve maxProfitI problem
+   * For every iteration, we hope to get the min price and max profit
+   * At the I-th day, there are two states we can be in for the profit:
+   * 1. We don't buy the stock yet, we don't have any profit
+   * 2. We buy the stock, we hope the price is low enough
+   * 3. We sold the stock before, we hope the price is high enough, so we can
+   * still get the max profit
+   * 4. We sold the stock today, we hope to get the max profit
+   *
+   * The profit is curr day price - min price
+   * as we iterate through the array, we either already have the max profit
+   * before, or we hope to get the max profit so the transition function is:
+   * dp[i] = max(dp[i-1], prices[i] - minPrice)
+   *
+   * @param prices
+   * @return int
+   */
+  int maxProfitI_2(vector<int>& prices) {
+    int n = prices.size();
+    vector<int> dp(n, 0);
+    int minPrice = prices[0];
+
+    for (int i = 1; i < n; ++i) {
+      minPrice = min(minPrice, prices[i]);
+      dp[i] = max(dp[i - 1], prices[i] - minPrice);
+    }
+    return dp[n - 1];
+  }
+  /**
+   * @brief We analyze the problem of two ways:
+   * the second way use a array to store the max profit, the there will be extra
+   * memory overhead, with time and space complexity of both O(n) The first way
+   * use two variables to store the max profit, we still traverse the array
+   * once, but we don't use extra space, so for the memory sensitive case, the
+   * first way is better
+   *
+   */
 
   /**
    * @brief best time to buy and sell the stock II Greedy
