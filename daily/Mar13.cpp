@@ -206,9 +206,9 @@ class Solution {
    */
   int maxProfitII(vector<int>& prices) {
     int n = prices.size();
-    int start = 0;
+    int start = prices[0];
     int max = 0;
-    for (int i = 0; i < n; ++i) {
+    for (int i = 1; i < n; ++i) {
       if (prices[i] > start) {
         max += prices[i] - start;
       }
