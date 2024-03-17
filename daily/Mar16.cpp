@@ -245,11 +245,50 @@ class Solution {
     return -1;
   }
 
+  /**
+   * @brief leetcode contest 126 p1
+   * 
+   * @param nums 
+   * @return int 
+   */
+  int sumOfEncryptedInt(vector<int>& nums) {
+    int n = nums.size();
+    int sum = 0;
+    for (int num : nums) {
+      sum += encrypt(num);
+    }
+
+    return sum;
+  }
+
+  /**
+   * @brief 
+   * 
+   */
+
  private:
   void reverse1(string& s, int start, int end) {
     for (int i = start, j = end; i < j; i++, j--) {
       swap(s[i], s[j]);
     }
+  }
+
+  int encrypt(int num) {
+    if (num > 0 && num < 10) return num;
+
+    // int to string
+    string s = to_string(num);
+    int base = 0;
+    for (int i = 0; i < s.length(); ++i) {
+      base = max(base, s[i] - 48);
+    }
+
+    string tmp;
+    for (int i = 0; i < s.length(); ++i) {
+      tmp += (char)(base + 48);
+    }
+
+    return stoi(tmp);
   }
 };
 
