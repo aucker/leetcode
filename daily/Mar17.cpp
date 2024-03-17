@@ -3,6 +3,14 @@ using namespace std;
 
 typedef long long ll;
 
+struct ListNode {
+  int val;
+  ListNode* next;
+  ListNode() : val(0), next(nullptr) {}
+  ListNode(int x) : val(x), next(nullptr) {}
+  ListNode(int x, ListNode* next) : val(x), next(next) {}
+};
+
 class Contest389 {
  public:
   /**
@@ -144,9 +152,169 @@ class Mar17 {
  public:
   string gcdOfStrings(string str1, string str2) {
     int len1 = str1.length(), len2 = str2.length();
-    if (len1 % len2 != 0) return ""; 
+    if (len1 % len2 != 0) return "";
     string ans;
 
     // abcabcabc, abc
   }
+
+  /**
+   * @brief 310: MinHeightTrees
+   *
+   * @param n
+   * @param edges
+   * @return vector<int>
+   */
+  vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges) {
+    if (n == 1) return {0};
+
+    vector<int> degree(n);
+    vector<vector<int>> adj(n);
+    for (auto& edge : edges) {
+      adj[edge[0]].emplace_back(edge[1]);
+      adj[edge[1]].emplace_back(edge[0]);
+      degree[edge[0]]++;
+      degree[edge[1]]++;
+    }
+    queue<int> qu;
+    vector<int> ans;
+    for (int i = 0; i < n; ++i) {
+      if (degree[i] == 1) {
+        qu.emplace(i);
+      }
+    }
+
+    int remainNodes = n;
+    while (remainNodes > 2) {
+      int sz = qu.size();
+      remainNodes -= sz;
+      for (int i = 0; i < sz; ++i) {
+        int curr = qu.front();
+        qu.pop();
+        for (auto& v : adj[curr]) {
+          if (--degree[v] == 1) {
+            qu.emplace(v);
+          }
+        }
+      }
+    }
+    while (!qu.empty()) {
+      ans.emplace_back(qu.front());
+      qu.pop();
+    }
+    return ans;
+  }
+};
+
+/**
+ * @brief Implement a Circular Queue w/ list
+ *
+ */
+class MyCircularQueue {
+ private:
+  int front;
+  int rear;
+  int capacity;
+  vector<int> elements;
+
+ public:
+  MyCircularQueue(int k) {
+    this->capacity = k + 1;
+    this->elements = vector<int>(capacity);
+    rear = front = 0;
+  }
+
+  bool enQueue(int value) {
+    if (isFull()) return false;
+
+    elements[rear] = value;
+    rear = (rear + 1) % capacity;
+    return true;
+  }
+
+  bool deQueue() {
+    if (isEmpty()) return false;
+
+    front = (front + 1) % capacity;
+    return true;
+  }
+
+  int Front() {
+    if (isEmpty()) return -1;
+
+    return elements[front];
+  }
+
+  int Rear() {
+    if (isEmpty()) return -1;
+
+    return elements[(rear - 1 + capacity) % capacity];
+  }
+
+  bool isEmpty() { return rear == front; }
+
+  bool isFull() { return ((rear + 1) % capacity) == front; }
+};
+
+/**
+ * @brief same Circular Queue
+ * Implemented with LinkedList
+ * 
+ */
+class MyCircularQueue1 {
+ private:
+  ListNode* head;
+  ListNode* tail;
+  int capacity;
+  int size;
+
+ public:
+  MyCircularQueue1(int k) {
+    this->capacity = k;
+    this->size = 0;
+    this->head = this->tail = nullptr;
+  }
+
+  bool enQueue(int value) {
+    if (isFull()) return false;
+
+    ListNode* node = new ListNode(value);
+    if (!head) {
+      head = tail = node;
+    } else {
+      tail->next = node;
+      tail = node;
+    }
+    ++size;
+    return true;
+  }
+
+  bool deQueue() {
+    if (isEmpty()) {
+      return false;
+    }
+    ListNode* node = head;
+    head = head->next;
+    --size;
+    delete node;
+    return true;
+  }
+
+  int Front() {
+    if (isEmpty()) {
+      return -1;
+    }
+    return head->val;
+  }
+
+  int Rear() {
+    if (isEmpty()) {
+      return -1;
+    }
+    return tail->val;
+  }
+
+  bool isEmpty() { return size == 0; }
+
+  bool isFull() { return size == capacity; }
 };
