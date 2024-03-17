@@ -259,7 +259,7 @@ class MyCircularQueue {
 /**
  * @brief same Circular Queue
  * Implemented with LinkedList
- * 
+ *
  */
 class MyCircularQueue1 {
  private:
@@ -317,4 +317,205 @@ class MyCircularQueue1 {
   bool isEmpty() { return size == 0; }
 
   bool isFull() { return size == capacity; }
+};
+
+class MyQueue {
+ private:
+  ListNode* head;
+  ListNode* tail;
+  int capacity;
+  int size;
+
+ public:
+  MyQueue(int k) {
+    this->capacity = capacity;
+    this->size = 0;
+    this->head = this->tail = nullptr;
+  }
+
+  bool enQueue(int value) {
+    if (isFull()) {
+      return false;
+    }
+
+    ListNode* node = new ListNode(value);
+    if (!head) {
+      head = tail = node;
+    } else {
+      tail->next = node;
+      tail = node;
+    }
+    ++size;
+    return true;
+  }
+
+  bool deQueue() {
+    if (isEmpty()) {
+      return false;
+    }
+    ListNode* node = head;
+    head = node->next;
+    --size;
+    delete node;
+    return true;
+  }
+
+  int Front() {
+    if (isEmpty()) {
+      return -1;
+    }
+    return head->val;
+  }
+
+  int Rear() {
+    if (isEmpty()) {
+      return -1;
+    }
+    return tail->val;
+  }
+
+  bool isEmpty() { return size == 0; }
+
+  bool isFull() { return size == capacity; }
+};
+
+class MyArrayQueue {
+ private:
+  int front;
+  int rear;
+  int capacity;
+  vector<int> elements;
+
+ public:
+  MyArrayQueue(int k) {
+    this->capacity = k + 1;
+    this->elements = vector<int>(capacity);
+    rear = front = 0;
+  }
+
+  bool enQueue(int value) {
+    if (isFull()) {
+      return false;
+    }
+    elements[rear] = value;
+    rear = (rear + 1) % capacity;
+    return true;
+  }
+
+  bool deQueue() {
+    if (isEmpty()) {
+      return false;
+    }
+    front = (front + 1) % capacity;
+    return true;
+  }
+
+  int Front() {
+    if (isEmpty()) {
+      return -1;
+    }
+    return elements[front];
+  }
+
+  int Rear() {
+    if (isEmpty()) {
+      return -1;
+    }
+    return elements[rear];
+  }
+
+  bool isEmpty() { return front == rear; }
+
+  bool isFull() { return ((rear + 1) % capacity) == front; }
+};
+
+struct DLinkedList {
+  int key, value;
+  DLinkedList* prev;
+  DLinkedList* next;
+  DLinkedList() : key(0), value(0), prev(nullptr), next(nullptr) {}
+  DLinkedList(int _key, int _value)
+      : key(_key), value(_value), prev(nullptr), next(nullptr) {}
+};
+
+class LRUCache {
+ private:
+  unordered_map<int, DLinkedList*> cache;
+  DLinkedList* head;
+  DLinkedList* tail;
+  int size;
+  int capacity;
+
+ public:
+  LRUCache(int _capacity) : capacity(_capacity), size(0) {
+    // use dummy head and tail
+    head = new DLinkedList();
+    tail = new DLinkedList();
+    head->next = tail;
+    tail->prev = head;
+  }
+
+  int get(int key) {
+    // if cache is empty
+    if (!cache.count(key)) {
+      return -1;
+    }
+
+    DLinkedList* node = cache[key];
+    moveToHead(node);
+    return node->value;
+  }
+
+  void put(int key, int value) {
+    // we
+    if (!cache.count(key)) {
+      // the key not exist, create a new node
+      DLinkedList* node = new DLinkedList(key, value);
+      // add into hashtable
+      cache[key] = node;
+      // add to the head of linkedlist
+      addToHead(node);
+      ++size;
+      if (size > capacity) {
+        // if oversize, delete tail of the linkedlist
+        DLinkedList* removed = removeTail();
+        // delete node in hashtable
+        cache.erase(removed->key);
+        delete removed;
+        --size;
+      }
+    } else {
+      // if key exists, we just need to update the value, and move this node to
+      // head
+      DLinkedList* node = cache[key];
+      node->value = value;
+      moveToHead(node);
+    }
+  }
+
+  void addToHead(DLinkedList* node) {
+    // note that the head is dummy, which means it doesn't store value
+    node->prev = head;
+    node->next = head->next;
+    head->next->prev = node;
+
+    // node become the new head
+    head->next = node;
+  }
+
+  void removeNode(DLinkedList* node) {
+    node->prev->next = node->next;
+    node->next->prev = node->prev;
+  }
+
+  void moveToHead(DLinkedList* node) {
+    removeNode(node);
+    addToHead(node);
+  }
+
+  DLinkedList* removeTail() {
+    DLinkedList* node = tail->prev;
+    removeNode(node);
+    return node;
+  }
 };
