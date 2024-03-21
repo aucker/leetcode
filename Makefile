@@ -2,6 +2,10 @@
 default:
 	./daily/name
 
+# git add all files under daily/
+add:
+	git add daily/*
+
 # git add all files under daily/ directory and commit
 commit:
 	git add daily/*
