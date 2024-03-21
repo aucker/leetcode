@@ -258,15 +258,30 @@ class Solution {
     return ans;
   }
 
+  /**
+   * @brief two pointer to solve reverse list
+   *
+   * @param head
+   * @return ListNode*
+   */
   ListNode* reverseList(ListNode* head) {
-    ListNode* curr = head, *pre = nullptr;
+    ListNode *curr = head, *pre = nullptr;
     while (curr) {
       ListNode* tmp = curr->next;
-      curr->next = pre; 
+      curr->next = pre;
       pre = curr;
       curr = tmp;
     }
     return pre;
+  }
+
+  ListNode* reverseListRe(ListNode* head) { return recursive(head, nullptr); }
+
+  ListNode* recursive(ListNode* curr, ListNode* prev) {
+    if (curr == nullptr) return prev;
+    ListNode* tmp = curr->next;
+    curr->next = prev;
+    return recursive(tmp, curr);
   }
 };
 
@@ -274,6 +289,12 @@ struct DLinkedList {
   int key, val;
   DLinkedList* prev;
   DLinkedList* next;
+
+  // this is used to override the operator <
+  bool operator<(const DLinkedList& rhs) const {
+    return key == rhs.key ? val < rhs.val : key < rhs.key;
+  }
+
   DLinkedList() : key(0), val(0), prev(nullptr), next(nullptr) {}
   DLinkedList(int _key, int _val)
       : key(_key), val(_val), prev(nullptr), next(nullptr) {}
@@ -398,5 +419,27 @@ class Slide {
       ans = max(ans, right - left);
     }
     return ans;
+  }
+};
+
+class Solution1 {
+ public:
+  bool isValid(string s) {
+    stack<char> stk;
+    for (char ch : s) {
+      if (stk.empty() && (ch == ')' || ch == ']' && ch == '}')) return false;
+      if (ch == '(' || ch == '{' || ch == '[') {
+        stk.push(ch);
+      } else {
+        if ((stk.top() == '(' && ch == ')') ||
+            (stk.top() == '{' && ch == '}') ||
+            (stk.top() == '[' && ch == ']')) {
+          stk.pop();
+        } else {
+          return false;
+        }
+      }
+    }
+    return stk.empty();
   }
 };
