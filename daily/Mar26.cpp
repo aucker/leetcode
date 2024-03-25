@@ -43,6 +43,52 @@ class Solution {
       }
     }
   }
+
+  /**
+   * @brief This is dumb, of couse we can use hashtable
+   * for O(N) of both time and space complexity
+   *
+   *
+   * @param nums
+   * @return int
+   */
+  int firstMissingPositive(vector<int>& nums) {
+    int n = nums.size();
+    unordered_map<int, int> cache;
+    for (int num : nums) {
+      cache[num]++;
+    }
+    for (int i = 1; i <= n + 1; ++i) {
+      if (cache.find(i) == cache.end()) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  int findMissingPositiveOp(vector<int>& nums) {
+    int n = nums.size();
+    for (int& num : nums) {
+      if (num <= 0) {
+        num = n + 1;
+      }
+    }
+
+    for (int i = 0; i < n; ++i) {
+      int num = abs(nums[i]);
+      if (num <= n) {
+        nums[num - 1] = -abs(nums[num - 1]);
+      }
+    }
+
+    for (int i = 0; i < n; ++i) {
+      if (nums[i] > 0) {
+        return i + 1;
+      }
+    }
+
+    return n + 1;
+  }
 };
 
 class Graph_dijkstra {
@@ -133,4 +179,65 @@ class Graph_Floyed {
 
  private:
   vector<vector<int>> dist;
+};
+
+struct ListNode {
+  int val;
+  ListNode* next;
+  ListNode() : val(0), next(nullptr) {}
+  ListNode(int x) : val(x), next(nullptr) {}
+  ListNode(int x, ListNode* next) : val(x), next(next) {}
+};
+
+class Floyd_cycle {
+ public:
+  /**
+   * LC287: Find the Duplicate Number
+   * @brief Find duplicate w/o modifying the list
+   * and use the constant extra space
+   * This is Floyd cycle detection algorithm
+   *
+   * @param nums
+   * @return int
+   */
+  int findDuplicate(vector<int>& nums) {
+    int fast = 0, slow = 0;
+    while (true) {
+      fast = nums[nums[fast]];
+      slow = nums[slow];
+      if (fast == slow) break;
+    }
+    int slow2 = 0;
+    while (true) {
+      slow = nums[slow];
+      slow2 = nums[slow2];
+      if (slow2 == slow) break;
+    }
+
+    return slow;
+  }
+
+  /**
+   * @brief LC142: Linked List Cycle II
+   * Use Floyd cycle detection algorithm to solve cycle problem
+   *
+   * @param head
+   * @return ListNode*
+   */
+  ListNode* detectCycle(ListNode* head) {
+    ListNode *fast = head, *slow = head;
+
+    while (true) {
+      if (!fast || !fast->next) return nullptr;
+      fast = fast->next->next;
+      slow = slow->next;
+      if (slow == fast) break;
+    }
+    ListNode* slow2 = head;
+    while (slow2 != slow) {
+      slow = slow->next;
+      slow2 = slow2->next;
+    }
+    return slow;
+  }
 };
