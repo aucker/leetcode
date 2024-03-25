@@ -10,7 +10,7 @@ class NQueen {
     // '.' is empty, 'Q' is queen
     // init board with string vector
     vector<string> board(n, string(n, '.'));
-    backtrack(board, n);
+    backtrack(board, 0);
     return ans;
   }
 
@@ -48,7 +48,7 @@ class NQueen {
     }
 
     // check if top right is valid
-    for (int i = row - 1, j = col + 1; i >= 0 && j < 9; --i, ++j) {
+    for (int i = row - 1, j = col + 1; i >= 0 && j < n; --i, ++j) {
       if (board[i][j] == 'Q') return false;
     }
 
