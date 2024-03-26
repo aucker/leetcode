@@ -89,6 +89,73 @@ class Solution {
 
     return n + 1;
   }
+
+  int lastStoneWeight(vector<int>& stones) {
+    priority_queue<int> q;
+    for (int s : stones) {
+      q.push(s);
+    }
+
+    while (q.size() > 1) {
+      int a = q.top();
+      q.pop();
+      int b = q.top();
+      q.pop();
+      if (a > b) {
+        q.push(a - b);
+      }
+    }
+    return q.empty() ? 0 : q.top();
+  }
+
+  /**
+   * @brief LC973: K Closest Points to Origin
+   * Time complexity: O(NlogN)
+   * Space complexity: O(logN)
+   *
+   * @param points
+   * @param k
+   * @return vector<vector<int>>
+   */
+  vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
+    sort(points.begin(), points.end(),
+         [](const vector<int>& u, const vector<int>& v) {
+           return u[0] * u[0] + u[1] * u[1] < v[0] * v[0] + v[1] * v[1];
+         });
+    return {points.begin(), points.begin() + k};
+  }
+
+  /**
+   * @brief Time: O(nlogK)
+   * Space: O(k)
+   *
+   * @param points
+   * @param k
+   * @return vector<vector<int>>
+   */
+  vector<vector<int>> kClosestHeap(vector<vector<int>>& points, int k) {
+    priority_queue<pair<int, int>> pq;
+    for (int i = 0; i < k; ++i) {
+      pq.emplace(points[i][0] * points[i][0] + points[i][1] * points[i][1]);
+    }
+
+    int n = points.size();
+    for (int i = k; i < n; ++i) {
+      int dist = points[i][0] * points[i][0] + points[i][1] * points[i][1];
+      if (dist < pq.top().first) {
+        pq.pop();
+        pq.emplace(dist, i);
+      }
+    }
+
+    vector<vector<int>> ans;
+    while (!pq.empty()) {
+      ans.push_back(points[pq.top().second]);
+      pq.pop();
+    }
+
+    return ans;
+  }
 };
 
 class Graph_dijkstra {
@@ -239,5 +306,30 @@ class Floyd_cycle {
       slow2 = slow2->next;
     }
     return slow;
+  }
+};
+
+/**
+ * @brief LC703: Kth Largest Element in a Stream
+ * Use Heap for the sort
+ *
+ */
+class KthLargest {
+ public:
+  priority_queue<int, vector<int>, greater<int>> pq;
+  int k;
+  KthLargest(int k, vector<int>& nums) {
+    this->k = k;
+    for (auto& x : nums) {
+      add(x);
+    }
+  }
+
+  int add(int val) {
+    pq.push(val);
+    if (pq.size() > k) {
+      pq.pop();
+    }
+    return pq.top();
   }
 };
