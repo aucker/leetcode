@@ -136,4 +136,41 @@ class Solution {
     }
     return right - left - 1;
   }
+
+  /**
+   * @brief Return the list of nums that 
+   * make three numbers sum = 0
+   * No repeat here
+   * 
+   * @param nums 
+   * @return vector<vector<int>> 
+   */
+  vector<vector<int>> threeSum(vector<int>& nums) {
+    vector<vector<int>> ans;
+    sort(nums.begin(), nums.end());
+    for (int i = 0; i < nums.size() - 2; ++i) {
+      int L = i + 1, R = nums.size() - 1;
+      while (L < R) {
+        if (nums[i] + nums[L] + nums[R] == 0) {
+          ans.push_back({nums[i], nums[L], nums[R]});
+          while (L < R && nums[L] == nums[L + 1]) {
+            ++L;
+          }
+          while (L < R && nums[R] == nums[R - 1]) {
+            --R;
+          }
+          ++L;
+          --R;
+        } else if (nums[i] + nums[L] + nums[R] > 0) {
+          --R;
+        } else {
+          ++L;
+        }
+      }
+      while (i < nums.size() - 1 && nums[i] == nums[i + 1]) {
+        ++i;
+      }
+    }
+    return ans;
+  }
 };
