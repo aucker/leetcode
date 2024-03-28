@@ -1,8 +1,49 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+using ll = long long;
+
 class Solution {
  public:
+  /**
+   * @brief LC2580: Count ways to group overlapping ranges
+   * M
+   *
+   * @param ranges
+   * @return int
+   */
+  int countWays(vector<vector<int>>& ranges) {
+    static constexpr int mod = 1e9 + 7;
+
+    sort(ranges.begin(), ranges.end());
+    int n = ranges.size();
+    ll res = 1;
+    for (int i = 0; i < n;) {
+      int r = ranges[i][1];
+      int j = i + 1;
+      while (j < n && ranges[j][0] <= r) {
+        r = max(r, ranges[j][1]);
+        j++;
+      }
+      res = res * 2 % mod;
+      i = j;
+    }
+    return res;
+  }
+
+  vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
+    // sort(points.begin(), points.end(),
+    //  [&](const vector<int>& u, const vector<int>& v) {
+    //  return u[0] * u[0] + u[1] * u[1] < v[0] * v[0] + v[1] * v[1];
+    //  });
+    sort(points.begin(), points.end(),
+         [&](const vector<int>& lhs, const vector<int>& rhs) {
+           return lhs[0] * lhs[0] + lhs[1] * lhs[1] <
+                  rhs[0] * rhs[0] + rhs[1] * rhs[1];
+         });
+    return {points.begin(), points.begin() + k};
+  }
+
   /**
    * @brief LC159: Longest substring w/ at most two
    * distinct chars
@@ -115,9 +156,9 @@ class Solution {
 
 /**
  * @brief LC244: disign the ds for WordDistance
- * 
+ *
  * This also use a hashmap
- * 
+ *
  */
 class WordDistance {
  private:
@@ -148,5 +189,49 @@ class WordDistance {
       }
     }
     return ans;
+  }
+};
+
+class Dijkstra {
+  /**
+   * @brief LC743: Network Delay Time
+   * [M]
+   * use dijkstra algorithm
+   *
+   * @param times
+   * @param n
+   * @param k
+   * @return int
+   */
+  int networkDelayTime(vector<vector<int>>& times, int n, int k) {
+    vector<vector<int>> g(n, vector<int>(n, INT_MAX / 2));  // neighbor matrix
+    for (auto& t : times) {
+      g[t[0] - 1][t[1] - 1] = t[2];
+    }
+
+    vector<int> dis(n, INT_MAX / 2), done(n);
+    dis[k - 1] = 0;
+    while (true) {
+      int x = -1;
+      for (int i = 0; i < n; i++) {
+        if (!done[i] && (x < 0 || dis[i] < dis[x])) {
+          x = i;
+        }
+      }
+
+      if (x < 0) {
+        return *max_element(dis.begin(), dis.end());
+      }
+
+      if (dis[x] == INT_MAX / 2) {  // some node unreachable
+        return -1;
+      }
+
+      done[x] = true;  // shortest path
+      for (int y = 0; y < n; y++) {
+        // update x neighbor shortest path
+        dis[y] = min(dis[y], dis[x] + g[x][y]);
+      }
+    }
   }
 };
