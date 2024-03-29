@@ -2,7 +2,6 @@
 using namespace std;
 
 using ll = long long;
-
 class Solution {
  public:
   /**
@@ -501,24 +500,56 @@ class MockInterview2 {
 
   /* clone the map */
   unordered_map<Node*, Node*> visited;
+  /* This is DFS solution, TIME & SPACE: O(N) */
   Node* cloneGraph(Node* node) {
     if (node == nullptr) return node;
 
-    // if node has been visited, retrieve from hash
+    // if this node has been visited, just retrieve and return
     if (visited.find(node) != visited.end()) {
       return visited[node];
     }
 
-    // clone node, not clone its neighbor
+    // or, we need to store this node in hash and update
     Node* cloneNode = new Node(node->val);
-    // hash store
     visited[node] = cloneNode;
 
-    // traverse node's neighbor update neighbor
+    // traverse this node's neighbor and update its neighbor
     for (auto& neighbor : node->neighbors) {
       cloneNode->neighbors.emplace_back(cloneGraph(neighbor));
     }
+
     return cloneNode;
+  }
+
+  /* BFS here: TIME & SPACE: O(N) */
+  Node* cloneGraphBFS(Node* node) {
+    if (node == nullptr) return node;
+
+    unordered_map<Node*, Node*> visitedb;
+
+    queue<Node*> Q;
+    Q.push(node);
+    // clone first node and store in hashtable
+    visited[node] = new Node(node->val);
+
+    // BFS
+    while (!Q.empty()) {
+      // get the head of queue
+      auto n = Q.front();
+      Q.pop();
+      // traverse neighbors
+      for (auto& neighbor : n->neighbors) {
+        if (visited.find(neighbor) == visited.end()) {
+          // if this node hasn't be visited
+          visited[neighbor] = new Node(neighbor->val);
+          // add neighbor into the queue
+          Q.push(neighbor);
+        }
+        // update curr node neighbors
+        visited[n]->neighbors.emplace_back(visited[neighbor]);
+      }
+    }
+    return visited[node];
   }
 
   /* Get the index of mountain array */
@@ -537,5 +568,105 @@ class MockInterview2 {
       }
     }
     return -1;
+  }
+};
+
+/**
+ * @brief Backtrack for Permute problem
+ *
+ */
+class Permutation {
+  void backtrack(vector<vector<int>>& res, vector<int>& output, int first,
+                 int len) {
+    // all nums are filled
+    if (first == len) {
+      res.emplace_back(output);
+      return;
+    }
+
+    for (int i = first; i < len; i++) {
+      //
+      swap(output[i], output[first]);
+      backtrack(res, output, first + 1, len);
+      swap(output[i], output[first]);
+    }
+  }
+
+  vector<vector<int>> permute(vector<int>& nums) {
+    vector<vector<int>> res;
+    backtrack(res, nums, 0, nums.size());
+    return res;
+  }
+};
+
+/**
+ * @brief Backtrack for NQueen
+ *
+ */
+class NQueen {
+ public:
+  vector<vector<string>> ans;
+  int res = 0;
+
+  /**
+   * @brief NQueen for get the res of possible
+   * solutions
+   * 
+   * @param n 
+   * @return vector<vector<string>> 
+   */
+  vector<vector<string>> solveQueens(int n) {
+    vector<string> board(n, string(n, '.'));
+    backtrack(board, 0);
+    return ans;
+  }
+
+  /**
+   * @brief NQueen for get the nums of solutions
+   * 
+   * @param n 
+   * @return int 
+   */
+  int solveQueens1(int n) {
+    vector<string> board(n, string(n, '.'));
+    backtrack(board, 0);
+    return res;
+  }
+
+  void backtrack(vector<string>& board, int row) {
+    if (row == board.size()) {
+      ans.push_back(board);
+      res++;
+      return;
+    }
+
+    int n = board[0].size();
+    for (int col = 0; col < n; ++col) {
+      if (!isValid(board, row, col)) {
+        continue;
+      }
+      board[row][col] = 'Q';
+      backtrack(board, row + 1);
+      board[row][col] = '.';
+    }
+  }
+
+  bool isValid(vector<string>& board, int row, int col) {
+    int n = board[0].size();
+
+    for (int i = 0; i < row; i++) {
+      // this pos is 'Q' already, so invalid
+      if (board[i][col] == 'Q') return false;
+    }
+
+    for (int i = row - 1, j = col + 1; i >= 0 && j < n; --i, ++j) {
+      if (board[i][j] == 'Q') return false;
+    }
+
+    for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; --i, --j) {
+      if (board[i][j] == 'Q') return false;
+    }
+
+    return true;
   }
 };
