@@ -235,3 +235,160 @@ class Dijkstra {
     }
   }
 };
+
+class SlidingWindow {
+ public:
+  /**
+   * @brief Count subarrays where max element appears
+   * at least K times
+   *
+   * Sliding windows
+   * I got understand, get the max element first
+   * then right should keep the windows that holds the element which nums of max
+   * GE k then left should try to move right, until the left bound of the window
+   *
+   * @param nums
+   * @param k
+   * @return long long
+   */
+  long long countSubarrays(vector<int>& nums, int k) {
+    int mx = *max_element(nums.begin(), nums.end());
+    ll ans = 0;
+    int cnt_mx = 0, left = 0;
+    for (int x : nums) {
+      cnt_mx += x == mx;
+      while (cnt_mx == k) {
+        cnt_mx -= nums[left] == mx;
+        left++;
+      }
+      ans += left;
+    }
+    return ans;
+  }
+
+ private:
+  const int MOD = 1e9 + 7;
+
+ public:
+  /**
+   * @brief LC907: Sum of subarry minimums
+   * Sliding window
+   *
+   * @param arr
+   * @return int
+   */
+  int sumSubarrayMins(vector<int>& arr) {
+    int len = arr.size();
+    vector<int> left(len, -1);
+    vector<int> right(len, len);
+    stack<int> stk;
+
+    for (int i = 0; i < len; i++) {
+      while (!stk.empty() && arr[stk.top()] >= arr[i]) {
+        stk.pop();
+      }
+      if (!stk.empty()) {
+        left[i] = stk.top();
+      }
+      stk.push(i);
+    }
+    ll sum = 0;
+    for (int i = 0; i < len; i++) {
+      sum += static_cast<ll>(i - left[i]) * (right[i] - i) * arr[i] % MOD;
+      sum %= MOD;
+    }
+    return sum;
+  }
+};
+
+/* This is not so hard: Google 101 */
+class Logger {
+ private:
+  unordered_map<string, int> msg2stamp;
+
+ public:
+  Logger() {}
+
+  /** Use hashtable to store the map of msg2stamp **/
+  bool shouldPrintMessage(int timestamp, string message) {
+    auto iter = msg2stamp.find(message);
+    if (iter == msg2stamp.end() || timestamp - iter->second >= 10) {
+      msg2stamp[message] = timestamp;
+      return true;
+    } else {
+      return false;
+    }
+  }
+};
+
+struct ListNode {
+  int val;
+  ListNode* next;
+  ListNode() : val(0), next(nullptr) {}
+  ListNode(int x) : val(x), next(nullptr) {}
+  ListNode(int x, ListNode* next) : val(x), next(next) {}
+};
+
+struct TreeNode {
+  int val;
+  TreeNode* left;
+  TreeNode* right;
+  TreeNode() : val(0), left(nullptr), right(nullptr) {}
+  TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+  TreeNode(int x, TreeNode* left, TreeNode* right)
+      : val(x), left(left), right(right) {}
+};
+
+class MockInterview1 {
+ public:
+  /* delete duplicate in sorted linkedlist [E] */
+  ListNode* deleteDuplicate(ListNode* head) {
+    if (head == nullptr) return head;
+    ListNode* curr = head;
+    while (curr && curr->next) {
+      if (curr->val == curr->next->val) {
+        ListNode* tmp = curr->next;
+        curr->next = curr->next->next;
+        delete tmp;
+      } else {
+        curr = curr->next;
+      }
+    }
+    return head;
+  }
+
+  /* decorate Record I use BFS */
+  vector<int> decorateRecord(TreeNode* root) {
+    if (root == nullptr) return {};
+    vector<int> ans;
+    vector<TreeNode*> cur = {root};
+    while (cur.size()) {
+      vector<TreeNode*> nxt;
+      for (auto node : cur) {
+        ans.push_back(node->val);
+        if (node->left) nxt.push_back(node->left);
+        if (node->right) nxt.push_back(node->right);
+      }
+      cur = move(nxt);
+    }
+    return ans;
+  }
+
+  /* get the nums of longest common subsequence DP problem */
+  int longestCommonSubsequence(string text1, string text2) {
+    int len1 = text1.size(), len2 = text2.size();
+    int dp[len1 + 1][len2 + 1];
+
+    memset(dp, 0, sizeof dp);
+    for (int i = 1; i <= len1; i++) {
+      for (int j = 1; j <= len2; j++) {
+        if (text1[i - 1] == text2[j - 1]) {
+          dp[i][j] = dp[i - 1][j - 1] + 1;
+        } else {
+          dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
+        }
+      }
+    }
+    return dp[len1][len2];
+  }
+};
