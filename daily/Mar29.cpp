@@ -392,3 +392,150 @@ class MockInterview1 {
     return dp[len1][len2];
   }
 };
+
+class Node {
+ public:
+  int val;
+  vector<Node*> neighbors;
+  Node() {
+    val = 0;
+    neighbors = vector<Node*>();
+  }
+  Node(int val_) {
+    val = val_;
+    neighbors = vector<Node*>();
+  }
+  Node(int val_, vector<Node*> neighbors_) {
+    val = val_;
+    neighbors = neighbors_;
+  }
+};
+
+class MockInterview2 {
+ public:
+  /* backtrack */
+  /* Generate the all possible parenthese */
+  void backtrack(vector<string>& ans, string& cur, int open, int close, int n) {
+    if (cur.size() == n * 2) {
+      ans.push_back(cur);
+      return;
+    }
+    if (open < n) {
+      cur.push_back('(');
+      backtrack(ans, cur, open + 1, close, n);
+      cur.pop_back();
+    }
+    if (close < open) {
+      cur.push_back(')');
+      backtrack(ans, cur, open, close + 1, n);
+      cur.pop_back();
+    }
+  }
+  vector<string> generateParenthesis(int n) {
+    vector<string> res;
+    string current;
+    backtrack(res, current, 0, 0, n);
+    return res;
+  }
+
+  vector<string> generateParenthesisR(int n) {
+    if (n == 1) return {"()"};
+    unordered_map<string, int> a;
+    vector<string> ans;
+    string tmp;
+    for (auto& s : generateParenthesis(n - 1)) {
+      for (int i = 0; i != 2 * (n - 1); i++) {
+        tmp = s.substr(0, i) + "()" + s.substr(i, 2 * (n - 1));
+        if (a[tmp] == 0) {
+          ++a[tmp];
+          ans.emplace_back(tmp);
+        }
+      }
+    }
+    return ans;
+  }
+
+  vector<string> generateParenthesisBack(int n) {
+    int m = n * 2;
+    vector<string> ans;
+    string path(m, 0);
+    function<void(int, int)> dfs = [&](int i, int open) {
+      if (i == m) {
+        ans.emplace_back(path);
+        return;
+      }
+      if (open < n) {  // left
+        path[i] = '(';
+        dfs(i + 1, open + 1);
+      }
+      if (i - open < open) {  // right
+        path[i] = ')';
+        dfs(i + 1, open);
+      }
+    };
+    dfs(0, 0);
+    return ans;
+  }
+
+  vector<string> generateParenthesisBack2(int n) {
+    vector<string> ans;
+    vector<int> path;
+    // balance = left - right
+    function<void(int, int)> dfs = [&](int i, int balance) {
+      if (path.size() == n) {
+        string s(n * 2, ')');
+        for (int j : path) s[j] = '(';
+        ans.emplace_back(s);
+        return;
+      }
+      // 0-balance right
+      for (int close = 0; close <= balance; ++close) {
+        path.push_back(i + close);  // 1 left
+        dfs(i + close + 1, balance - close + 1);
+        path.pop_back();
+      }
+    };
+    dfs(0, 0);
+    return ans;
+  }
+
+  /* clone the map */
+  unordered_map<Node*, Node*> visited;
+  Node* cloneGraph(Node* node) {
+    if (node == nullptr) return node;
+
+    // if node has been visited, retrieve from hash
+    if (visited.find(node) != visited.end()) {
+      return visited[node];
+    }
+
+    // clone node, not clone its neighbor
+    Node* cloneNode = new Node(node->val);
+    // hash store
+    visited[node] = cloneNode;
+
+    // traverse node's neighbor update neighbor
+    for (auto& neighbor : node->neighbors) {
+      cloneNode->neighbors.emplace_back(cloneGraph(neighbor));
+    }
+    return cloneNode;
+  }
+
+  /* Get the index of mountain array */
+  /* Easy */
+  int peakIndexInMountainArray(vector<int>& arr) {
+    int len = arr.size();
+    int le = 0, ri = len - 1;
+    while (le < ri) {
+      int mid = (le + ri) / 2;
+      if (arr[mid] > arr[mid + 1] && arr[mid] > arr[mid - 1]) {
+        return mid;
+      } else if (arr[mid] > arr[mid + 1] && arr[mid] < arr[mid - 1]) {
+        le = mid;
+      } else {
+        ri = mid;
+      }
+    }
+    return -1;
+  }
+};
