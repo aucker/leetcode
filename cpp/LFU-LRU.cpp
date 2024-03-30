@@ -5,7 +5,7 @@ using namespace std;
  * @brief This Node struct is both for LFU and LRU
  * But attention, LRU doesn't need the freq, so rewrite the constructor
  * for LRU instead or there will be error here.
- * 
+ *
  */
 struct Node {
   int key, val;
@@ -13,20 +13,20 @@ struct Node {
   Node* prev;
   Node* next;
   Node() : key(-1), val(-1), freq(0), prev(nullptr), next(nullptr) {}
-  Node(int _k, int _v)
-      : key(_k), val(_v), freq(1), prev(nullptr), next(nullptr) {}
+  Node(int k_, int v_)
+      : key(k_), val(v_), freq(1), prev(nullptr), next(nullptr) {}
 };
 
 /**
  * @brief FreqList struct is prioritized for LFU, to track the freq of node
- * 
+ *
  */
 struct FreqList {
   int freq;
   Node* vhead;
   Node* vtail;
 
-  FreqList(int _f) : freq(_f), vhead(new Node()), vtail(new Node()) {
+  FreqList(int f_) : freq(f_), vhead(new Node()), vtail(new Node()) {
     vhead->next = vtail;
     vtail->prev = vhead;
   }
@@ -34,11 +34,11 @@ struct FreqList {
 
 /**
  * @brief LFU implementation
- * 
+ *
  */
 class LFUCache {
  private:
-  unordered_map<int, Node*> occ;
+  unordered_map<int, Node*> cache;
   unordered_map<int, FreqList*> freq_map;
   int size;
   int min_freq;
@@ -46,41 +46,43 @@ class LFUCache {
  public:
   LFUCache(int capacity) : size(capacity) {}
 
-  bool empty(FreqList* l) { return l->vhead->next == l->vtail ? true : false; }
-
-  void deleteNode(Node* t) {
-    t->prev->next = t->next;
-    t->next->prev = t->prev;
+  bool isEmpty(FreqList* list) {
+    return list->vhead->next == list->vtail ? true : false;
   }
 
-  void addHead(Node* t) {
-    int freq = t->freq;
+  void deleteNode(Node* node) {
+    node->prev->next = node->next;
+    node->next->prev = node->prev;
+  }
+
+  void addHead(Node* node) {
+    int freq = node->freq;
     if (freq_map.find(freq) == freq_map.end()) {
-      // not find
+      // not find this freq
       freq_map[freq] = new FreqList(freq);
     }
-    FreqList* l = freq_map[freq];
-    t->next = l->vhead->next;
-    l->vhead->next->prev = t;
-    t->prev = l->vhead;
-    l->vhead->next = t;
+    FreqList* list = freq_map[freq];
+    node->next = list->vhead->next;
+    node->prev = list->vhead->next->prev;
+    list->vhead->next->prev = node;
+    list->vhead->next = node;
   }
 
   void popTail() {
-    Node* t = freq_map[min_freq]->vtail->prev;
-    deleteNode(t);
-    occ.erase(t->key);
+    Node* node = freq_map[min_freq]->vtail->prev;
+    deleteNode(node);
+    cache.erase(node->key);
   }
 
   int get(int key) {
     int res = -1;
-    if (occ.find(key) != occ.end()) {
-      Node* t = occ[key];
-      res = t->val;
-      deleteNode(t);
-      t->freq++;
-      if (empty(freq_map[min_freq])) min_freq++;
-      addHead(t);
+    if (cache.find(key) != cache.end()) {
+      Node* node = cache[key];
+      res = node->val;
+      deleteNode(node);
+      node->freq++;
+      if (isEmpty(freq_map[min_freq])) min_freq++;
+      addHead(node);
     }
     return res;
   }
@@ -88,32 +90,33 @@ class LFUCache {
   void put(int key, int value) {
     if (size == 0) return;
     if (get(key) != -1) {
-      occ[key]->val = value;
+      cache[key]->val = value;
     } else {
-      if (occ.size() == size) {
+      if (cache.size() == size) {
         popTail();
       }
-      Node* t = new Node(key, value);
-      occ[key] = t;
-      min_freq = 1;  // the new insert is least, 1
-      addHead(t);
+      Node* node = new Node(key, value);
+      cache[key] = node;  // add to cache
+      min_freq = 1;       // new add, min is 1
+      addHead(node);
     }
   }
 };
 
 /**
  * @brief LRU Implementation
- * 
+ *
  */
 class LRUCache {
-private:
+ private:
   unordered_map<int, Node*> cache;
   Node* head;
   Node* tail;
   int size;
   int capacity;
-public:
-  LRUCache (int _capacity) : capacity(_capacity), size(0) {
+
+ public:
+  LRUCache(int capacity_) : capacity(capacity_), size(0) {
     head = new Node();
     tail = new Node();
     head->next = tail;
@@ -164,7 +167,6 @@ public:
   }
 
   void moveToHead(Node* node) {
-
     removeNode(node);
     addToHead(node);
   }
