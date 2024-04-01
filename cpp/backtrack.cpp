@@ -61,6 +61,42 @@ class NQueen {
   }
 };
 
+class NQueenOP {
+ public:
+  vector<vector<string>> solveNQueen(int n) {
+    vector<vector<string>> ans;
+    vector<int> col(n), on_path(n), diag1(n * 2 - 1), diag2(n * 2 - 1);
+    function<void(int)> dfs = [&](int r) {
+      // we traverse the last row, this is end
+      if (r == n) {
+        vector<string> board(n);
+        for (int i = 0; i < n; i++) {
+          board[i] = string(col[i], '.') + 'Q' + string(n - 1 - col[i], '.');
+        }
+        ans.emplace_back(board);
+        return;
+      }
+
+      // or, we just traverse every row & col
+      for (int c = 0; c < n; c++) {
+        int rc = r - c + n - 1;
+        if (!on_path[c] && !diag1[r + c] && !diag2[rc]) {
+          col[r] = c;
+          // try to place at pos
+          on_path[c] = diag1[r + c] = diag2[rc] = true;
+          // go to next row by backtrack
+          dfs(r + 1);
+          // recover this by undo
+          on_path[c] = diag1[r + c] = diag2[rc] = false;
+        }
+      }
+    };
+    // we solve this from first row : row 0
+    dfs(0);
+    return ans;
+  }
+};
+
 class Sudoku {
  public:
   void solveSudoku(vector<vector<char>>& board) {

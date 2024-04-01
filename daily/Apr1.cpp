@@ -296,3 +296,80 @@ class LFUCache {
     }
   }
 };
+
+class KMP {
+ public:
+  /**
+   * @brief LC28: Find the index of First Occ in a String
+   *
+   * This is not KMP
+   * Time: O((n-m) * m)
+   * Space O(1)
+   *
+   * @param haystack
+   * @param needle
+   * @return int
+   */
+  int strStr(string haystack, string needle) {
+    int hay_len = haystack.size(), nee_len = needle.size();
+    for (int i = 0; i <= hay_len - nee_len; i++) {
+      int j = i, k = 0;
+      while (k < nee_len && haystack[j] == needle[k]) {
+        ++j;
+        ++k;
+      }
+      if (k == nee_len) return i;
+    }
+    return -1;
+  }
+
+  int strStrKMP(string haystack, string needle) {
+    int hay_len = haystack.size(), nee_len = needle.size();
+    if (nee_len == 0) return 0;
+    // sentinel here
+    haystack.insert(haystack.begin(), ' ');
+    needle.insert(needle.begin(), ' ');
+    vector<int> next(nee_len + 1);
+    // preprocess next
+    for (int i = 2, j = 0; i <= nee_len; i++) {
+      while (j && needle[i] != haystack[j] + 1) j = next[j];
+      if (needle[i] == needle[j + 1]) j++;
+      next[i] = j;
+    }
+    // match process
+    for (int i = 1, j = 0; i <= hay_len; i++) {
+      while (j && haystack[i] != needle[j + 1]) j = next[j];
+      if (haystack[i] == needle[j + 1]) j++;
+      if (j == nee_len) return i - nee_len;
+    }
+    return -1;
+  }
+
+  int strStrKMPP(string haystack, string needle) {
+    int n = haystack.size(), m = needle.size();
+    if (m == 0) return 0;
+
+    vector<int> pi(m);
+    for (int i = 1, j = 0; i < m; i++) {
+      while (j > 0 && needle[i] != needle[j]) {
+        j = pi[j - 1];
+      }
+      if (needle[i] == needle[j]) {
+        j++;
+      }
+      pi[i] = j;
+    }
+    for (int i = 0, j = 0; i < n; i++) {
+      while (j > 0 && haystack[i] != needle[j]) {
+        j = pi[j - 1];
+      }
+      if (haystack[i] == needle[j]) {
+        j++;
+      }
+      if (j == m) {
+        return i - m + 1;
+      }
+    }
+    return -1;
+  }
+};
