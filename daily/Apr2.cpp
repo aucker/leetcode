@@ -69,6 +69,33 @@ class Solution {
     }
     return dp[n];
   }
+
+  vector<TreeNode*> allPossibleFBT3(int n) {
+    if (memo.find(n) != memo.end()) {
+      return memo[n];
+    }
+    vector<TreeNode*> result;
+    if (n == 1) {
+      result.push_back(new TreeNode(0));
+    } else {
+      for (int i = 0; i < n; i++) {
+        int j = n - 1 - i;
+        for (auto& left : allPossibleFBT3(i)) {
+          for (auto& right : allPossibleFBT3(j)) {
+            TreeNode* node = new TreeNode(0);
+            node->left = left;
+            node->right = right;
+            result.push_back(node);
+          }
+        }
+      }
+    }
+    memo[n] = result;
+    return result;
+  }
+
+ private:
+  unordered_map<int, vector<TreeNode*>> memo;
 };
 
 struct Node {
@@ -344,17 +371,17 @@ class Sudoku {
 
 class NQueensOP {
  public:
-	/**
-	 * @brief This lambda function is hard
-	 * 
-	 * Time: O(n^2 * n!)
-	 * search tree has at most O(n!) leaves, every leaf need O(n^2) of time
-	 * 
-	 * Space: O(n)
-	 * 
-	 * @param n 
-	 * @return vector<vector<string>> 
-	 */
+  /**
+   * @brief This lambda function is hard
+   *
+   * Time: O(n^2 * n!)
+   * search tree has at most O(n!) leaves, every leaf need O(n^2) of time
+   *
+   * Space: O(n)
+   *
+   * @param n
+   * @return vector<vector<string>>
+   */
   vector<vector<string>> solveNQueens(int n) {
     vector<vector<string>> ans;
     vector<int> col(n), on_path(n), diag1(n * 2 - 1), diag2(n * 2 - 1);
