@@ -2,7 +2,7 @@
 using namespace std;
 
 class Solution {
-public:
+ public:
   bool isAnagram(string s, string t) {
     if (s.size() != t.size()) return false;
     vector<int> buffers(26, 0);

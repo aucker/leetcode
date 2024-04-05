@@ -150,9 +150,9 @@ class Solution {
 
   /**
    * @brief Recursion is so slow
-   * 
-   * @param node 
-   * @return ListNode* 
+   *
+   * @param node
+   * @return ListNode*
    */
   ListNode* copyy(ListNode* node) {
     if (!node) return nullptr;
@@ -162,7 +162,7 @@ class Solution {
   }
 
   ListNode* rever(ListNode* node) {
-    ListNode* curr = node, *prev = nullptr;
+    ListNode *curr = node, *prev = nullptr;
     while (curr) {
       ListNode* tmp = curr->next;
       curr->next = prev;

@@ -1,7 +1,7 @@
 using namespace std;
 
 class Solution {
-public:
+ public:
   int findSpecialInteger(vector<int>& arr) {
     int len = arr.size();
     int count = 0;
@@ -9,7 +9,7 @@ public:
     int max = 0;
     for (int i = 0; i < len; ++i) {
       if (arr[i] == prev) {
-        count ++;
+        count++;
       } else {
         count = 1;
         prev = arr[i];

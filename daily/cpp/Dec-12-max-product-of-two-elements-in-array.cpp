@@ -1,7 +1,7 @@
 using namespace std;
 
 class Solution {
-public:
+ public:
   int maxProduct(vector<int>& nums) {
     int max1 = INT_MIN;
     int max2 = INT_MIN;

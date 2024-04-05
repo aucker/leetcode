@@ -138,12 +138,12 @@ class Solution {
   }
 
   /**
-   * @brief Return the list of nums that 
+   * @brief Return the list of nums that
    * make three numbers sum = 0
    * No repeat here
-   * 
-   * @param nums 
-   * @return vector<vector<int>> 
+   *
+   * @param nums
+   * @return vector<vector<int>>
    */
   vector<vector<int>> threeSum(vector<int>& nums) {
     vector<vector<int>> ans;

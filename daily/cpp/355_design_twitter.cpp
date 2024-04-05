@@ -5,13 +5,13 @@ using namespace std;
  * @brief  Designing Twitter
  * Twitter object will be instantiated
  * and called as such:
- * 
+ *
  * Twitter* obj = new Twitter();
  * obj->postTweet(userId, tweetId);
  * vector<int> param_2 = obj->getNewsFeed(userId);
  * obj->follow(followerId, followeeId);
  * obj->unfollow(followerId, followeeId);
- * 
+ *
  */
 
 class Tweet {

@@ -2,7 +2,7 @@
 
 using namespace std;
 class Solution {
-public:
+ public:
   int numberOfWays(string corridor) {
     int chairs = 0;
     long long res = 1;
@@ -11,9 +11,11 @@ public:
       if (corridor[i] == 'S') {
         chairs++;
 
-        while (++i < corridor.size() && corridor[i] != 'S');
-        // the while increment i and check each character in the corridor string.
-        // the loop continues until the end of the string or until the next chair.
+        while (++i < corridor.size() && corridor[i] != 'S')
+          ;
+        // the while increment i and check each character in the corridor
+        // string. the loop continues until the end of the string or until the
+        // next chair.
         if (i < corridor.size()) {
           chairs++;
         }
@@ -24,7 +26,7 @@ public:
         }
 
         if (divisions > 1 && i < corridor.size()) {
-          res = (res * divisions) % static_cast<int>(1e9+7);
+          res = (res * divisions) % static_cast<int>(1e9 + 7);
         }
         i--;
       }

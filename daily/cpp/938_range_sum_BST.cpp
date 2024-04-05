@@ -2,7 +2,7 @@
 using namespace std;
 
 class Solution {
-public:
+ public:
   int rangeSumBST(TreeNode* root, int low, int high) {
     if (!root) return 0;
 

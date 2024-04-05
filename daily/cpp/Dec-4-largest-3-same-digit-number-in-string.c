@@ -5,10 +5,11 @@ char* largestGoodInteger(char* num) {
   char prev = num[0], maxd = ' ';
   for (register int i = 0; num[i] != '\0'; i++) {
     char c = num[i];
-    if (c == prev) count++;
-    else count = 1;
-    if (count == 3 && c > maxd)
-      maxd = c;
+    if (c == prev)
+      count++;
+    else
+      count = 1;
+    if (count == 3 && c > maxd) maxd = c;
     prev = c;
   }
 

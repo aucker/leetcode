@@ -2,7 +2,7 @@
 using namespace std;
 
 class Node {
-public:
+ public:
   int val;
   Node* left;
   Node* right;
@@ -13,13 +13,13 @@ public:
   Node(int _val) : val(_val), left(NULL), right(NULL), next(NULL) {}
 
   Node(int _val, Node* _left, Node* _right, Node* _next)
-    : val(_val), left(_left), right(_right), next(_next) {}
+      : val(_val), left(_left), right(_right), next(_next) {}
 };
 
 class Solution {
-public:
+ public:
   Node* connect(Node* root) {
-    vector<Node* > arr;
+    vector<Node*> arr;
     arr.push_back(root);
     if (!root) return root;
     while (arr.size() != 0) {
@@ -30,7 +30,7 @@ public:
           arr[i]->next = arr[i + 1];
         }
       }
-      int len = arr.size(); // store it to prevent runtime infinite condition
+      int len = arr.size();  // store it to prevent runtime infinite condition
 
       for (int i = 0; i < len; i++) {
         if (arr[i]->left) arr.push_back(arr[i]->left);

@@ -2,7 +2,7 @@
 using namespace std;
 
 class Solution {
-public:
+ public:
   vector<int> temperature(vector<int> &T) {
     vector<int> res(T.size(), 0);
     stack<int> st;

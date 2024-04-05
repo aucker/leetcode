@@ -3,14 +3,10 @@
 using namespace std;
 
 class MyClass {
-  public:
-  MyClass() {
-    cout << "My class constructor called" << endl;
-  }
+ public:
+  MyClass() { cout << "My class constructor called" << endl; }
 
-  ~MyClass() {
-    cout << "My class destructor called" << endl;
-  }
+  ~MyClass() { cout << "My class destructor called" << endl; }
 };
 
 int main() {
@@ -20,6 +16,7 @@ int main() {
   // use the Myclass object
   cout << "Using the MyClass Object" << endl;
 
-  // The smart pointer will automatically delete the object when it goes out of scope
+  // The smart pointer will automatically delete the object when it goes out of
+  // scope
   return 0;
 }

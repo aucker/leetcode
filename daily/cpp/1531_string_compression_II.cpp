@@ -2,7 +2,7 @@
 using namespace std;
 
 class Solution {
-public:
+ public:
   int getLengthOfOptimalCompression(string s, int k) {
     /* int n = s.size();
     vector<vector<int>> dp(n + 1, vector<int>(k + 1, 0));

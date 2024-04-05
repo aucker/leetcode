@@ -7,9 +7,9 @@ class Solution {
    * @brief Find the duplicate number in List
    * Use set in STL is really slow
    * O(N) of time and space complexity
-   * 
-   * @param nums 
-   * @return int 
+   *
+   * @param nums
+   * @return int
    */
   int findDuplicate(vector<int>& nums) {
     set<int> st;
@@ -43,5 +43,4 @@ class Solution {
       return -1;
     }
   }
-
 };

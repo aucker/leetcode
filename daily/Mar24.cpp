@@ -240,8 +240,6 @@ class Weekly390 {
     }
     return ans;
   }
-
-  
 };
 
 int main() {

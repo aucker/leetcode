@@ -542,9 +542,9 @@ class BinarySearch {
       }
     }
     if ((m + n) % 2 == 1) {
-      return static_cast<double>(m1); // odd
+      return static_cast<double>(m1);  // odd
     } else {
-      return static_cast<double>(m1+m2) / 2; // even
+      return static_cast<double>(m1 + m2) / 2;  // even
     }
   }
 };

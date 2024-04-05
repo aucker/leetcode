@@ -7,18 +7,19 @@ struct TreeNode {
   TreeNode *right;
   TreeNode() : val(0), left(nullptr), right(nullptr) {}
   TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-  TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+  TreeNode(int x, TreeNode *left, TreeNode *right)
+      : val(x), left(left), right(right) {}
 };
 
 class Solution {
-public:
-  vector<int> inorderTraversal(TreeNode* root) {
+ public:
+  vector<int> inorderTraversal(TreeNode *root) {
     vector<int> res;
     dfs(root, res);
     return res;
   }
 
-  void dfs(TreeNode* node, vector<int>& res) {
+  void dfs(TreeNode *node, vector<int> &res) {
     if (!node) return;
 
     if (node->left || node->right) {

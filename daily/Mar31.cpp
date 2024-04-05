@@ -14,10 +14,15 @@ class Solution {
    * @return false
    */
   bool canAttendMettings(vector<vector<int>> &intervals) {
-    auto sortByFirstNumber = [&](const vector<int> &lhs, const vector<int> &rhs) { return lhs[0] < rhs[0]; };
+    auto sortByFirstNumber = [&](const vector<int> &lhs,
+                                 const vector<int> &rhs) {
+      return lhs[0] < rhs[0];
+    };
 
     sort(intervals.begin(), intervals.end(),
-         [&](const vector<int> &lhs, const vector<int> &rhs) { return lhs[0] < rhs[0]; });
+         [&](const vector<int> &lhs, const vector<int> &rhs) {
+           return lhs[0] < rhs[0];
+         });
 
     if (intervals.size() == 1) return true;
 
@@ -167,7 +172,8 @@ struct Node {
   Node *prev;
   Node *next;
   Node() : key(-1), val(-1), freq(0), prev(nullptr), next(nullptr) {}
-  Node(int key_, int val_) : key(key_), val(val_), freq(1), prev(nullptr), next(nullptr) {}
+  Node(int key_, int val_)
+      : key(key_), val(val_), freq(1), prev(nullptr), next(nullptr) {}
 };
 
 struct FreqList {
@@ -196,7 +202,9 @@ class LFUCache {
  public:
   LFUCache(int capacity_) : size(capacity_) {}
 
-  bool isEmpty(FreqList *list) { return list->vhead->next == list->vtail ? true : false; }
+  bool isEmpty(FreqList *list) {
+    return list->vhead->next == list->vtail ? true : false;
+  }
 
   void addHead(Node *node) {
     int freq = node->freq;

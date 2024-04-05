@@ -2,12 +2,12 @@
 
 using namespace std;
 class Solution {
-public:
+ public:
   int minTimeToVisitAllPoints(vector<vector<int>>& points) {
     int res = 0;
 
     for (int i = 1; i < points.size(); i++) {
-      res += toTime(points[i-1], points[i]);
+      res += toTime(points[i - 1], points[i]);
     }
 
     return res;

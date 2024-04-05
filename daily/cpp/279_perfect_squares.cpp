@@ -1,8 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 class Solution {
-
-public:
+ public:
   int numSquares(int n) {
     vector<int> dp(n + 1, INT_MAX);
     dp[0] = 0;

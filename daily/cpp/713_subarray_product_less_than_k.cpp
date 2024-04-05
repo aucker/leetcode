@@ -6,10 +6,10 @@ class Solution {
   /**
    * @brief LC713: Subarray Product Less than K
    * Sliding window
-   * 
-   * @param nums 
-   * @param k 
-   * @return int 
+   *
+   * @param nums
+   * @param k
+   * @return int
    */
   int numSubarrayProdctLessThanK(vector<int>& nums, int k) {
     if (k == 0) return 0;
