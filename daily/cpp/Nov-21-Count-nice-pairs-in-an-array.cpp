@@ -2,7 +2,7 @@
 
 using namespace std;
 class Solution {
-public:
+ public:
   int reverse(int num) {
     int rev = 0;
     while (num > 0) {
@@ -24,7 +24,7 @@ public:
     for (int i = 0; i < len - 1; i++) {
       long cont = 1;
       while (i < len - 1 && nums[i] == nums[i + 1]) {
-        cont ++;
+        cont++;
         i++;
       }
       res = (res % mod + (cont * (cont - 1)) / 2) % mod;

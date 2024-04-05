@@ -2,7 +2,7 @@
 
 using namespace std;
 class Solution {
-public:
+ public:
   bool arrayEqual(vector<string>& word1, vector<string>& word2) {
     string str1, str2;
     for (int i = 0; i < word1.size(); i++) {

@@ -611,9 +611,9 @@ class NQueen {
   /**
    * @brief NQueen for get the res of possible
    * solutions
-   * 
-   * @param n 
-   * @return vector<vector<string>> 
+   *
+   * @param n
+   * @return vector<vector<string>>
    */
   vector<vector<string>> solveQueens(int n) {
     vector<string> board(n, string(n, '.'));
@@ -623,9 +623,9 @@ class NQueen {
 
   /**
    * @brief NQueen for get the nums of solutions
-   * 
-   * @param n 
-   * @return int 
+   *
+   * @param n
+   * @return int
    */
   int solveQueens1(int n) {
     vector<string> board(n, string(n, '.'));

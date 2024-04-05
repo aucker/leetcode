@@ -1,7 +1,7 @@
 using namespace std;
 
 class Solution {
-public:
+ public:
   int totalMoney(int n) {
     int res = 0;
     int weekn = n / 7;
@@ -28,7 +28,7 @@ public:
   int sumSeven(int s) {
     int sum = 0;
     int n = 1;
-    while (n < =7) {
+    while (n < = 7) {
       sum += s;
       s++;
       n++;

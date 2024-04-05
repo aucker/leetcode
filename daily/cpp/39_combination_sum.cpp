@@ -3,7 +3,7 @@ using namespace std;
 
 class Solution {
  public:
- /* A typical backtrack solution */
+  /* A typical backtrack solution */
   vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
     vector<vector<int>> res;
     vector<int> path;

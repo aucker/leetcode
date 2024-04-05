@@ -2,14 +2,14 @@
 using namespace std;
 
 class Solution {
-public:
+ public:
   int largestSubmatrix(vector<vector<int>>& matrix) {
     int m = matrix.size(), n = matrix[0].size();
     int res = 0;
     for (int j = 0; j < n; j++) {
       for (int i = 1; i < m; i++) {
         if (matrix[i][j] == 1) {
-          matrix[i][j] += matrix[i-1][j];
+          matrix[i][j] += matrix[i - 1][j];
         }
       }
     }
@@ -18,7 +18,7 @@ public:
       sort(matrix[i].begin(), matrix[i].end());
       reverse(matrix[i].begin(), matrix[i].end());
       for (int j = 0; j < n; j++) {
-        res = max(res, matrix[i][j] * (j+1));
+        res = max(res, matrix[i][j] * (j + 1));
       }
     }
 

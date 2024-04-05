@@ -50,7 +50,7 @@ class Solution {
       }
     }
 
-    for (const auto &m : mp) {
+    for (const auto& m : mp) {
       cout << "hashtable element: " << m.second << endl;
     }
     return ans;
@@ -59,7 +59,7 @@ class Solution {
 
 int main() {
   Solution s;
-  vector<int> tes = {1, 0,0,1,0,1,1,0,1,0,1,1,1,0,0,1};
+  vector<int> tes = {1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1};
   // 12, 11, 2, 0, -1
   s.findMaxLength1(tes);
   return 0;

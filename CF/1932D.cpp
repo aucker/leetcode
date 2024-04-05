@@ -15,14 +15,12 @@ typedef long long ll;
 #define pb(x) push_back(x);
 #define mp(x, y) make_pair(x, y);
 
-
 int main() {
   fast_io
 
-  int t;
+      int t;
   cin >> t;
   while (t--) {
-    
   }
   return 0;
 }

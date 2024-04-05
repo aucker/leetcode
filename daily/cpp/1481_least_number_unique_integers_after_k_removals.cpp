@@ -2,7 +2,7 @@
 using namespace std;
 
 class Solution {
-public:
+ public:
   int findLeastNumberOfUniqueInts(vector<int>& arr, int k) {
     unordered_map<int, int> mp;
     for (auto a : arr) mp[a]++;
@@ -28,8 +28,8 @@ public:
     /**
      * 1. Use a unordered map to keep track of the frequencies.
      * 2. Seperately stored frequencies in a vector v and sort them
-     * 3. To get the array of minimum unique elements, there will be only 2 
+     * 3. To get the array of minimum unique elements, there will be only 2
      *    condition which we have to look after
-     *  3.1 
+     *  3.1
      */
-};
+  };

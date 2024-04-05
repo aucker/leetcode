@@ -247,9 +247,9 @@ class Solution {
 
   /**
    * @brief leetcode contest 126 p1
-   * 
-   * @param nums 
-   * @return int 
+   *
+   * @param nums
+   * @return int
    */
   int sumOfEncryptedInt(vector<int>& nums) {
     int n = nums.size();
@@ -262,8 +262,8 @@ class Solution {
   }
 
   /**
-   * @brief 
-   * 
+   * @brief
+   *
    */
 
  private:

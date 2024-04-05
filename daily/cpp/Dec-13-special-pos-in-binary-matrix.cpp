@@ -1,7 +1,7 @@
 #include <vector>
 using namespace std;
 class Solution {
-public:
+ public:
   int numSpecial(vector<vector<int>>& mat) {
     // int res = 0;
     // int row = mat.size();
@@ -38,12 +38,12 @@ public:
     int res = 0;
     for (int i = 0; i < mat.size(); i++) {
       int index = checkRow(mat, i);
-      if (index >= 0 && checkCol(mat, i, index))
-        res++;
+      if (index >= 0 && checkCol(mat, i, index)) res++;
     }
     return res;
   }
-private:
+
+ private:
   int checkRow(vector<vector<int>>& mat, int i) {
     int index = -1;
     for (int j = 0; j < mat[0].size(); ++j) {

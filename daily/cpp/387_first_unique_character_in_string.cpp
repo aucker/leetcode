@@ -2,7 +2,7 @@
 using namespace std;
 
 class Solution {
-public:
+ public:
   int firstUniqChar(string s) {
     vector<int> vc(26, 0);
 

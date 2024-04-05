@@ -2,8 +2,9 @@
 
 using namespace std;
 class Solution {
-public:
-  void traversal(TreeNode* root, int targetSum, int curSum, vector<int>& curPath, vector<vector<int>>& paths) {
+ public:
+  void traversal(TreeNode* root, int targetSum, int curSum,
+                 vector<int>& curPath, vector<vector<int>>& paths) {
     if (!root) return;
     curPath.push_back(root->val);
     if (!root->left && !root->right) {

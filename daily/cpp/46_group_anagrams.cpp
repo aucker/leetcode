@@ -2,7 +2,7 @@
 using namespace std;
 
 class Solution {
-public:
+ public:
   vector<vector<string>> groupAnagrams(vector<string>& strs) {
     vector<vector<string>> result;
     unordered_map<string, vector<string>> group;
@@ -18,7 +18,7 @@ public:
     return result;
   }
 
-private:
+ private:
   string getSignature(const string& s) {
     vector<int> count(26, 0);
     for (char c : s) {

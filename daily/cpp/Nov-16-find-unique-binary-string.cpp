@@ -1,10 +1,10 @@
-#include <string>
 #include <algorithm>
+#include <string>
 
 using namespace std;
 
 class Solution {
-public:
+ public:
   string findDiff(vector<string>& nums) {
     string result = "";
     string curr = "";
@@ -15,8 +15,9 @@ public:
     return result;
   }
 
-private:
-  void solve(unordered_set<string>& S, string& result, string& curr, int& n, bool& found) {
+ private:
+  void solve(unordered_set<string>& S, string& result, string& curr, int& n,
+             bool& found) {
     if (found) return;
     if (curr.size() == n) {
       if (S.find(curr) == S.end()) {

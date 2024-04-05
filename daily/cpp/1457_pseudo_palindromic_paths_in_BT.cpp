@@ -7,17 +7,16 @@ struct TreeNode {
   TreeNode *right;
   TreeNode() : val(0), left(nullptr), right(nullptr) {}
   TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-  TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+  TreeNode(int x, TreeNode *left, TreeNode *right)
+      : val(x), left(left), right(right) {}
 }
 
 class Solution {
-public:
-  int pseudoPalindromicPaths(TreeNode* root) {
-    return cntPseudoPaths(root, 0);
-  }
+ public:
+  int pseudoPalindromicPaths(TreeNode *root) { return cntPseudoPaths(root, 0); }
 
-private:
-  int cntPseudoPaths(TreeNode* node, int path) {
+ private:
+  int cntPseudoPaths(TreeNode *node, int path) {
     if (!node) return 0;
 
     path ^= (1 << node->val);

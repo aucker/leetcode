@@ -2,7 +2,7 @@
 
 using namespace std;
 class Solution {
-public:
+ public:
   int countCharacters(vector<string>& words, string chars) {
     vector<int> counts(26, 0);
 
@@ -25,8 +25,7 @@ public:
     for (char ch : word) {
       int x = ch - 'a';
       c[x]++;
-      if (c[x] > counts[x])
-        return false;
+      if (c[x] > counts[x]) return false;
     }
 
     return true;
