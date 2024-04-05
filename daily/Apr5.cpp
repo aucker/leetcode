@@ -43,7 +43,6 @@ class Solution {
 };
 
 class maxDiff {
-<<<<<<< HEAD
 	int ans = 0;
 
 	pair<int, int> dfs(TreeNode* node) {
@@ -149,25 +148,4 @@ public:
 			cur = cur->right;
 		}
 	}
-=======
-  int ans = 0;
-
-  pair<int, int> dfs(TreeNode* node) {
-    if (!node) {
-      return {INT_MAX, INT_MIN};
-    }
-    auto [l_mn, l_mx] = dfs(node->left);
-    auto [r_mn, r_mx] = dfs(node->right);
-    int mn = min(node->val, min(l_mn, r_mn));
-    int mx = max(node->val, max(l_mx, r_mx));
-    ans = max(ans, max(node->val - mn, mx - node->val));
-    return {mn, mx};
-  }
-
- public:
-  int maxAncestorDiff(TreeNode* root) {
-    dfs(root);
-    return ans;
-  }
->>>>>>> b1fe100156a83242fa60a85ec7c83c3f3081f21d
 };
