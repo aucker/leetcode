@@ -105,13 +105,6 @@ class TreeAncestor1 {
   }
 };
 
-struct Node {
-  int key, val;
-  Node* next;
-  Node() : key(0), val(0), next(nullptr) {}
-  Node(int key_, int val_) : key(key_), val(val_), next(nullptr) {}
-};
-
 // class BFS {
 // 	public:
 // 	int BFSTemplate(Node* start, Node* end) {
@@ -151,8 +144,7 @@ struct TreeNode {
   TreeNode* right;
   TreeNode() : val(0), left(nullptr), right(nullptr) {}
   TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-  TreeNode(int x, TreeNode* left, TreeNode* right)
-      : val(x), left(left), right(right) {}
+  TreeNode(int x, TreeNode* left, TreeNode* right) : val(x), left(left), right(right) {}
 };
 
 class BFS {
@@ -184,5 +176,94 @@ class BFS {
       }
     }
     return 0;
+  }
+};
+
+struct Node {
+  int key, val;
+  int freq;
+  Node* prev;
+  Node* next;
+  Node() : key(-1), val(-1), freq(0), prev(nullptr), next(nullptr) {}
+  Node(int key_, int val_) : key(key_), val(val_), freq(1), prev(nullptr), next(nullptr) {}
+};
+
+struct FreqList {
+  int freq;
+  Node* vhead;
+  Node* vtail;
+  FreqList(int f_) : freq(f_) {
+    vhead = new Node();
+    vtail = new Node();
+    vhead->next = vtail;
+    vtail->prev = vhead;
+  }
+};
+
+/* LFU implementation */
+class LFUCache {
+  unordered_map<int, Node*> cache;
+  unordered_map<int, FreqList*> freq_map;
+  int size;
+  int min_freq;
+
+ public:
+  LFUCache(int capacity_) : size(capacity_) {}
+
+  bool isEmpty(FreqList* list) { return list->vhead->next == list->vtail ? true : false; }
+
+  void deleteNode(Node* node) {
+    node->prev->next = node->next;
+    node->next->prev = node->prev;
+  }
+
+  void addHead(Node* node) {
+    int freq = node->freq;
+    if (freq_map.find(freq) == freq_map.end()) {
+      // not find this freq
+      freq_map[freq] = new FreqList(freq);
+    }
+
+    FreqList* list = freq_map[freq];
+    node->next = list->vhead->next;
+    node->prev = list->vhead->next->prev;
+    list->vhead->next->prev = node;
+    list->vhead->next = node;
+  }
+
+  void popTail() {
+    Node* node = freq_map[min_freq]->vtail->prev;
+    deleteNode(node);
+    cache.erase(node->key);
+  }
+
+  int get(int key) {
+    int res = -1;
+    if (cache.find(key) != cache.end()) {
+      // find this
+      Node* node = cache[key];
+      res = node->val;
+      deleteNode(node);
+      node->freq++;
+      if (isEmpty(freq_map[min_freq])) min_freq++;
+      addHead(node);  // move this node to head
+    }
+
+    return res;
+  }
+
+  void put(int key, int value) {
+    if (size == 0) return;
+    if (get(key) != -1) {
+      cache[key]->val = value;
+    } else {
+      if (cache.size() == size) {
+        popTail();  // cache is full, need to remove some
+      }
+      Node* node = new Node(key, value);
+      cache[key] = node;  // add the cache
+      min_freq = 1;       // new node freq will be 1
+      addHead(node);
+    }
   }
 };
