@@ -144,7 +144,8 @@ struct TreeNode {
   TreeNode* right;
   TreeNode() : val(0), left(nullptr), right(nullptr) {}
   TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-  TreeNode(int x, TreeNode* left, TreeNode* right) : val(x), left(left), right(right) {}
+  TreeNode(int x, TreeNode* left, TreeNode* right)
+      : val(x), left(left), right(right) {}
 };
 
 class BFS {
@@ -185,7 +186,8 @@ struct Node {
   Node* prev;
   Node* next;
   Node() : key(-1), val(-1), freq(0), prev(nullptr), next(nullptr) {}
-  Node(int key_, int val_) : key(key_), val(val_), freq(1), prev(nullptr), next(nullptr) {}
+  Node(int key_, int val_)
+      : key(key_), val(val_), freq(1), prev(nullptr), next(nullptr) {}
 };
 
 struct FreqList {
@@ -210,7 +212,9 @@ class LFUCache {
  public:
   LFUCache(int capacity_) : size(capacity_) {}
 
-  bool isEmpty(FreqList* list) { return list->vhead->next == list->vtail ? true : false; }
+  bool isEmpty(FreqList* list) {
+    return list->vhead->next == list->vtail ? true : false;
+  }
 
   void deleteNode(Node* node) {
     node->prev->next = node->next;
