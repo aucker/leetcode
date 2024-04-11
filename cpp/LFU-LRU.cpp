@@ -113,10 +113,9 @@ class LRUCache {
   Node* head;
   Node* tail;
   int size;
-  int capacity;
 
  public:
-  LRUCache(int capacity_) : capacity(capacity_), size(0) {
+  LRUCache(int capacity_) : size(capacity_) {
     head = new Node();
     tail = new Node();
     head->next = tail;
@@ -128,52 +127,42 @@ class LRUCache {
     if (cache.find(key) != cache.end()) {
       Node* node = cache[key];
       res = node->val;
-      moveToHead(node);
+      deleteNode(node);
+      addHead(node);
     }
     return res;
   }
 
   void put(int key, int value) {
+    if (size == 0) return;
     // check if the key exist
-    if (cache.find(key) == cache.end()) {
+    if (get(key) != -1) {
+      cache[key]->val = value;
+    } else {
+      if (size == cache.size()) {
+        popTail();
+      }
       Node* node = new Node(key, value);
       cache[key] = node;
-      addToHead(node);
-      ++size;
-      if (size > capacity) {
-        Node* remove = removeTail();
-        cache.erase(remove->key);
-        --size;
-        delete remove;
-      }
-    } else {
-      Node* node = cache[key];
-      node->val = value;
-      moveToHead(node);
+      addHead(node);
     }
   }
 
-  void addToHead(Node* node) {
+  void addHead(Node* node) {
     node->next = head->next;
     node->prev = head->next->prev;
-
     head->next->prev = node;
     head->next = node;
   }
 
-  void removeNode(Node* node) {
+  void deleteNode(Node* node) {
     node->next->prev = node->prev;
     node->prev->next = node->next;
   }
 
-  void moveToHead(Node* node) {
-    removeNode(node);
-    addToHead(node);
-  }
-
-  Node* removeTail() {
+  Node* popTail() {
     Node* node = tail->prev;
-    removeNode(node);
-    return node;
+    deleteNode(node);
+    cache.erase(node->key);
   }
 };
