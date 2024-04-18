@@ -2,14 +2,13 @@
 using namespace std;
 
 class Solution {
-
  public:
   /**
    * @brief LC 928 Minimize Malware Spread II
-   * 
-   * @param graph 
-   * @param initial 
-   * @return int 
+   *
+   * @param graph
+   * @param initial
+   * @return int
    */
   int minMalwareSpread(vector<vector<int>>& graph, vector<int>& initial) {
     unordered_set<int> st(initial.begin(), initial.end());

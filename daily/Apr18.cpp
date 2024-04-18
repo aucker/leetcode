@@ -14,7 +14,9 @@ class Solution {
     for (int x : changed) {
       auto it = mark.find(x);
       if (it == mark.end()) {  // not find this element
-        mark.insert(x * 2); ans.push_back(x); } else {           // find this element x
+        mark.insert(x * 2);
+        ans.push_back(x);
+      } else {           // find this element x
         mark.erase(it);  // erase the mark
       }
     }
