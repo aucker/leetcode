@@ -52,7 +52,7 @@ class Solution {
     return ans;
   }
 
-  long long countAlternatingSubarrays(vector<int> &nums) {
+  long long countAlternatingSubarrays(vector<int>& nums) {
     /// Use the sliding window will TLE
     // int len = nums.size();
     // int le = 0, ri = 0;

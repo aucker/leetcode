@@ -3,25 +3,25 @@ using namespace std;
 
 struct ListNode {
   int val;
-  ListNode *next;
+  ListNode* next;
   ListNode() : val(0), next(nullptr) {}
   ListNode(int x) : val(x), next(nullptr) {}
-  ListNode(int x, ListNode *next) : val(x), next(next) {}
+  ListNode(int x, ListNode* next) : val(x), next(next) {}
 };
 
 class Solution {
  public:
-  ListNode *removeZeroSumSublists(ListNode *head) {
-    ListNode *dummy = new ListNode(0);
+  ListNode* removeZeroSumSublists(ListNode* head) {
+    ListNode* dummy = new ListNode(0);
     dummy->next = head;
     int prefix = 0;
-    unordered_map<int, ListNode *> seen;
-    for (ListNode *node = dummy; node; node = node->next) {
+    unordered_map<int, ListNode*> seen;
+    for (ListNode* node = dummy; node; node = node->next) {
       prefix += node->val;
       seen[prefix] = node;
     }
     prefix = 0;
-    for (ListNode *node = dummy; node; node = node->next) {
+    for (ListNode* node = dummy; node; node = node->next) {
       prefix += node->val;
       node->next = seen[prefix]->next;
     }
@@ -47,7 +47,7 @@ class Solution {
     return (int)round(fibn / sqrt5);
   }
 
-  int rob(vector<int> &nums) {
+  int rob(vector<int>& nums) {
     int sz = nums.size();
     if (sz == 1) return nums[0];
     if (sz == 2) return max(nums[0], nums[1]);
@@ -61,7 +61,7 @@ class Solution {
   }
 
   // round can't rob head and tail same time
-  int robII(vector<int> &nums) {
+  int robII(vector<int>& nums) {
     int sz = nums.size();
     if (sz == 1) {
       return nums[0];
@@ -70,7 +70,7 @@ class Solution {
     return max(rob_help(nums, 0, sz - 2), rob_help(nums, 1, sz - 1));
   }
 
-  bool wordBreak(string s, vector<string> &wordDict) {
+  bool wordBreak(string s, vector<string>& wordDict) {
     unordered_set<string> wordSet(wordDict.begin(), wordDict.end());
     int sz = s.size();
     vector<bool> dp(sz + 1, false);
@@ -87,7 +87,7 @@ class Solution {
   }
 
  private:
-  int rob_help(vector<int> &nums, int start, int end) {
+  int rob_help(vector<int>& nums, int start, int end) {
     int first = nums[start], second = max(nums[start], nums[start] + 1);
     if (start == end) return first;
     for (int i = start + 2; i <= end; ++i) {

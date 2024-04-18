@@ -3,7 +3,7 @@ using namespace std;
 
 class Solution {
  public:
-  void solveSudoku(vector<vector<char>> &board) {
+  void solveSudoku(vector<vector<char>>& board) {
     for (int i = 0; i < 9; ++i) {
       for (int j = 0; j < 9; ++j) {
         backtrack(board, i, j);
@@ -12,7 +12,7 @@ class Solution {
     return;
   }
 
-  void backtrack(vector<vector<char>> &board, int i, int j) {
+  void backtrack(vector<vector<char>>& board, int i, int j) {
     int m = 9, n = 9;
     if (j == n) {
       // go the last col, we need to new row
@@ -40,7 +40,7 @@ class Solution {
     }
   }
 
-  bool isValid(vector<vector<char>> &board, int r, int c, char ch) {
+  bool isValid(vector<vector<char>>& board, int r, int c, char ch) {
     for (int i = 0; i < 9; ++i) {
       // check repeat in row
       if (board[r][i] == ch) return false;
@@ -68,7 +68,7 @@ class NQueen {
   // path: all rows that are smaller than row has queen
   // select from: the 'row' row every col is option to place queen
   // end: row is equal or greater than last row of board, full in the board
-  void backtrack(vector<string> &board, int row) {
+  void backtrack(vector<string>& board, int row) {
     // when to end
     if (row == board.size()) {
       ans.push_back(board);
@@ -90,7 +90,7 @@ class NQueen {
     }
   }
 
-  bool isValid(vector<string> &board, int row, int col) {
+  bool isValid(vector<string>& board, int row, int col) {
     int n = board.size();
     // check if queen are in conflict
     for (int i = 0; i < row; ++i) {
@@ -113,8 +113,8 @@ class NQueen {
 
 struct DLinkedList {
   int key, val;
-  DLinkedList *prev;
-  DLinkedList *next;
+  DLinkedList* prev;
+  DLinkedList* next;
   DLinkedList() : key(0), val(0), prev(nullptr), next(nullptr) {}
   DLinkedList(int _key, int _val)
       : key(_key), val(_val), prev(nullptr), next(nullptr) {}
@@ -122,9 +122,9 @@ struct DLinkedList {
 
 class LRUCache {
  private:
-  unordered_map<int, DLinkedList *> cache;
-  DLinkedList *head;
-  DLinkedList *tail;
+  unordered_map<int, DLinkedList*> cache;
+  DLinkedList* head;
+  DLinkedList* tail;
   int size;
   int capacity;
 
@@ -139,7 +139,7 @@ class LRUCache {
   int get(int key) {
     // check if cache has the key
     if (!cache.count(key)) return -1;
-    DLinkedList *node = cache[key];
+    DLinkedList* node = cache[key];
     moveToHead(node);
     return node->val;
   }
@@ -148,12 +148,12 @@ class LRUCache {
     // check if cache has the key
     if (!cache.count(key)) {
       // add new
-      DLinkedList *node = new DLinkedList(key, value);
+      DLinkedList* node = new DLinkedList(key, value);
       cache[key] = node;
       addToHead(node);
       ++size;
       if (size > capacity) {
-        DLinkedList *toRemove = removeTail();
+        DLinkedList* toRemove = removeTail();
         // remember for the hashtable, always erase the key
         cache.erase(toRemove->key);
         delete toRemove;
@@ -161,13 +161,13 @@ class LRUCache {
       }
     } else {
       // the key has the value, just update the value of key
-      DLinkedList *node = cache[key];
+      DLinkedList* node = cache[key];
       node->val = value;
       moveToHead(node);
     }
   }
 
-  void addToHead(DLinkedList *node) {
+  void addToHead(DLinkedList* node) {
     node->prev = head;
     node->next = head->next;
     head->next->prev = node;
@@ -176,18 +176,18 @@ class LRUCache {
     head->next = node;
   }
 
-  void removeNode(DLinkedList *node) {
+  void removeNode(DLinkedList* node) {
     node->prev->next = node->next;
     node->next->prev = node->prev;
   }
 
-  void moveToHead(DLinkedList *node) {
+  void moveToHead(DLinkedList* node) {
     removeNode(node);
     addToHead(node);
   }
 
-  DLinkedList *removeTail() {
-    DLinkedList *toRemove = tail->prev;
+  DLinkedList* removeTail() {
+    DLinkedList* toRemove = tail->prev;
     removeNode(toRemove);
     return toRemove;
   }
@@ -196,7 +196,7 @@ class LRUCache {
 class BinaryFind {
  public:
   // write a basic binary search
-  int binarySearch(vector<int> &nums, int target) {
+  int binarySearch(vector<int>& nums, int target) {
     int left = 0, right = nums.size() - 1;
     while (left <= right) {
       int mid = left + (right - left) / 2;
@@ -213,7 +213,7 @@ class BinaryFind {
   }
 
   // find the first position of target
-  int binarySearchFirst(vector<int> &nums, int target) {
+  int binarySearchFirst(vector<int>& nums, int target) {
     int left = 0, right = nums.size() - 1;
     while (left <= right) {
       int mid = left + (right - left) / 2;
@@ -253,7 +253,7 @@ class Sort {
    *
    * @param nums
    */
-  void bubbleSort(vector<int> &nums) {
+  void bubbleSort(vector<int>& nums) {
     int n = nums.size();
     for (int i = 0; i < n - 1; ++i) {
       for (int j = 0; j < n - i - 1; ++j) {
@@ -269,7 +269,7 @@ class Sort {
    *
    * @param nums
    */
-  void selectionSort(vector<int> &nums) {
+  void selectionSort(vector<int>& nums) {
     int n = nums.size();
     for (int i = 0; i < n - 1; ++i) {
       int minIndex = i;
@@ -287,7 +287,7 @@ class Sort {
    *
    * @param nums
    */
-  void insertionSort(vector<int> &nums) {
+  void insertionSort(vector<int>& nums) {
     int n = nums.size();
     for (int i = 1; i < n; ++i) {
       int key = nums[i];
@@ -305,9 +305,9 @@ class Sort {
    *
    * @param nums
    */
-  void mergeSort(vector<int> &nums) { merge(nums, 0, nums.size() - 1); }
+  void mergeSort(vector<int>& nums) { merge(nums, 0, nums.size() - 1); }
 
-  void merge(vector<int> &nums, int left, int right) {
+  void merge(vector<int>& nums, int left, int right) {
     if (left >= right) {
       return;
     }
@@ -318,7 +318,7 @@ class Sort {
     // merge(nums, left, mid, right);
   }
 
-  void merge(vector<int> &nums, int left, int mid, int right) {
+  void merge(vector<int>& nums, int left, int mid, int right) {
     vector<int> temp(right - left + 1);
     int i = left, j = mid + 1, k = 0;
     while (i <= mid && j <= right) {
@@ -344,9 +344,9 @@ class Sort {
    *
    * @param nums
    */
-  void quickSort(vector<int> &nums) { quick(nums, 0, nums.size() - 1); }
+  void quickSort(vector<int>& nums) { quick(nums, 0, nums.size() - 1); }
 
-  void quick(vector<int> &nums, int left, int right) {
+  void quick(vector<int>& nums, int left, int right) {
     if (left >= right) {
       return;
     }
@@ -355,7 +355,7 @@ class Sort {
     quick(nums, pivot + 1, right);
   }
 
-  int partition(vector<int> &nums, int left, int right) {
+  int partition(vector<int>& nums, int left, int right) {
     int pivot = nums[right];
     int i = left;
     for (int j = left; j < right; ++j) {
@@ -373,7 +373,7 @@ class Sort {
    *
    * @param nums
    */
-  void heapSort(vector<int> &nums) {
+  void heapSort(vector<int>& nums) {
     int n = nums.size();
     for (int i = n / 2 - 1; i >= 0; --i) {
       heapify(nums, n, i);
@@ -384,7 +384,7 @@ class Sort {
     }
   }
 
-  void heapify(vector<int> &nums, int n, int i) {
+  void heapify(vector<int>& nums, int n, int i) {
     int largest = i;
     int left = 2 * i + 1;
     int right = 2 * i + 2;
@@ -405,7 +405,7 @@ class Sort {
    *
    * @param nums
    */
-  void countingSort(vector<int> &nums) {
+  void countingSort(vector<int>& nums) {
     int n = nums.size();
     int maxVal = *max_element(nums.begin(), nums.end());
     vector<int> count(maxVal + 1);
@@ -429,7 +429,7 @@ class Sort {
    *
    * @param nums
    */
-  void bucketSort(vector<int> &nums) {
+  void bucketSort(vector<int>& nums) {
     int n = nums.size();
     int maxVal = *max_element(nums.begin(), nums.end());
     int minVal = *min_element(nums.begin(), nums.end());
@@ -456,7 +456,7 @@ class Sort {
    *
    * @param nums
    */
-  void radixSort(vector<int> &nums) {
+  void radixSort(vector<int>& nums) {
     int n = nums.size();
     int maxVal = *max_element(nums.begin(), nums.end());
     for (int exp = 1; maxVal / exp > 0; exp *= 10) {
@@ -464,7 +464,7 @@ class Sort {
     }
   }
 
-  void countingSortByDigit(vector<int> &nums, int exp) {
+  void countingSortByDigit(vector<int>& nums, int exp) {
     int n = nums.size();
     vector<int> count(10);
     for (int i = 0; i < n; ++i) {
@@ -487,7 +487,7 @@ class Sort {
    *
    * @param nums
    */
-  void shellSort(vector<int> &nums) {
+  void shellSort(vector<int>& nums) {
     int n = nums.size();
     for (int gap = n / 2; gap > 0; gap /= 2) {
       for (int i = gap; i < n; ++i) {
@@ -506,7 +506,7 @@ class Sort {
    *
    * @param nums
    */
-  void combSort(vector<int> &nums) {
+  void combSort(vector<int>& nums) {
     int n = nums.size();
     int gap = n;
     bool swapped = true;
@@ -527,7 +527,7 @@ class Sort {
 
 class BinarySearch {
  public:
-  double findMedianSortedArrays(vector<int> &nums1, vector<int> &nums2) {
+  double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
     int m = nums1.size(), n = nums2.size();
     int i = 0, j = 0;
     int m1 = 0, m2 = 0;
