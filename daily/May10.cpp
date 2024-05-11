@@ -3,13 +3,13 @@ using namespace std;
 
 class Solution {
  public:
- /**
-  * @brief Use the 2-loop
-  * Time: O(N^2)
-  * 
-  * @param batteryPercentages 
-  * @return int 
-  */
+  /**
+   * @brief Use the 2-loop
+   * Time: O(N^2)
+   *
+   * @param batteryPercentages
+   * @return int
+   */
   int countTestedDevices(vector<int>& batteryPercentages) {
     int res = 0;
     int i = 0;
@@ -31,9 +31,9 @@ class Solution {
   /**
    * @brief This is optimized version
    * Time: O(N)
-   * 
-   * @param batteryPercentages 
-   * @return int 
+   *
+   * @param batteryPercentages
+   * @return int
    */
   int countTestedDevicesOP(vector<int>& batteryPercentages) {
     int res = 0;
