@@ -7,9 +7,9 @@ class Solution {
    * @brief LC: 2244: min rounds to finish the task
    * Time: O(n)
    * Space: O(n)
-   * 
-   * @param tasks 
-   * @return int 
+   *
+   * @param tasks
+   * @return int
    */
   int minumumRounds(vector<int>& tasks) {
     unordered_map<int, int> cnt;
