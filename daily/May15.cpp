@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+
 #include <algorithm>
 #include <array>
 #include <numeric>
@@ -123,9 +124,9 @@ class Solution {
    * @brief use Stack + Binary search
    * Time: O(nlog n)
    * Space: O(n)
-   * 
-   * @param tasks 
-   * @return int 
+   *
+   * @param tasks
+   * @return int
    */
   auto FindMinimumTimeStk(vector<vector<int>>& tasks) -> int {
     sort(tasks.begin(), tasks.end(),
