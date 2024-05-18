@@ -12,3 +12,5 @@ target/
 *.exe
 *.o
 .*
+
+.clang-tidy
