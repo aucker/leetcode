@@ -3,15 +3,15 @@ using namespace std;
 
 class Solution {
  public:
- /**
-  * @brief LC:3067: Count pairs of connectable servers in a
-  * Weighted Tree Network
-  * Time: O(N^2), Space: O(n)
-  * 
-  * @param edges 
-  * @param signalSpeed 
-  * @return vector<int> 
-  */
+  /**
+   * @brief LC:3067: Count pairs of connectable servers in a
+   * Weighted Tree Network
+   * Time: O(N^2), Space: O(n)
+   *
+   * @param edges
+   * @param signalSpeed
+   * @return vector<int>
+   */
   vector<int> countPairsOfConnectableServers(vector<vector<int>>& edges,
                                              int signalSpeed) {
     int n = edges.size() + 1;
