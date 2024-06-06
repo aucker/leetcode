@@ -1,4 +1,6 @@
+#include <algorithm>
 #include <iostream>
+#include <vector>
 using namespace std;
 
 class Solution {
@@ -63,4 +65,55 @@ class Solution {
     }
     sort(A.begin(), A.end());
   }
+
+  // Func to perform partitioning
+  int partition(vector<int>& arr, int low, int high) {
+    int pivot = arr[high];  // choosing last element as pivot
+    int i = (low - 1);      // Index of smaller element
+
+    for (int j = low; j <= high - 1; j++) {
+      // If curr element is LE to pivot
+      if (arr[j] <= pivot) {
+        i++;                   // increment index of smaller element
+        swap(arr[i], arr[j]);  // swap elements
+      }
+    }
+    swap(arr[i + 1], arr[high]);  // swap pivot element w/ ele at i+1
+    return (i + 1);
+  }
+
+ public:
+  // Main func implement quickSorts
+  void quickSort(vector<int>& arr, int low, int high) {
+    if (low < high) {
+      // pi is partitioning index, arr[p] is now at right place
+      int pi = partition(arr, low, high);
+
+      // Separately sort elems before and after partition
+      quickSort(arr, low, pi - 1);   // before pi
+      quickSort(arr, pi + 1, high);  // after pi
+    }
+  }
+
+  //  * Print an Array
+  void printArray(const vector<int>& arr) {
+    for (int i : arr) {
+      cout << i << " ";
+    }
+    cout << endl;
+  }
 };
+
+int main() {
+  Solution sln;
+  vector<int> arr = {10, 7, 8, 9, 1, 5};
+  int n = arr.size();
+  cout << "Original array: ";
+  sln.printArray(arr);
+
+  sln.quickSort(arr, 0, n - 1);
+
+  cout << "Sorted array: ";
+  sln.printArray(arr);
+  return 0;
+}
