@@ -30,10 +30,11 @@ class Solution {
       };
       return dfs(i, j);
     };
-    int res1 = helper(2, len - 1, nums[0] + nums[1]);              // first two nums
-    int res2 = helper(0, len - 3, nums[len - 1] + nums[len - 2]);  // last two nums
-    int res3 = helper(1, len - 2, nums[0] + nums[len - 1]);        // first and last
-    return max({res1, res2, res3}) + 1;                            // add first op
+    int res1 = helper(2, len - 1, nums[0] + nums[1]);  // first two nums
+    int res2 =
+        helper(0, len - 3, nums[len - 1] + nums[len - 2]);   // last two nums
+    int res3 = helper(1, len - 2, nums[0] + nums[len - 1]);  // first and last
+    return max({res1, res2, res3}) + 1;                      // add first op
   }
 
   int maxOperationsOp(vector<int>& nums) {
@@ -61,9 +62,9 @@ class Solution {
       };
       return dfs(i, j);
     };
-    int res1 = helper(2, len - 1, nums[0] + nums[1]);              // first two
-    int res2 = helper(1, len - 2, nums[0] + nums[len - 1]);        // first and last
+    int res1 = helper(2, len - 1, nums[0] + nums[1]);        // first two
+    int res2 = helper(1, len - 2, nums[0] + nums[len - 1]);  // first and last
     int res3 = helper(0, len - 3, nums[len - 1] + nums[len - 2]);  // last two
-    return max({res1, res2, res3}) + 1;                            // all max + 1 op
+    return max({res1, res2, res3}) + 1;  // all max + 1 op
   }
 };
