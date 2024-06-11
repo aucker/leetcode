@@ -11,7 +11,7 @@ class Solution {
  private:
   int mod = 1e9 + 7;
 
-  int solve(int n, int &k, int target, vector<vector<int>> &dp) {
+  int solve(int n, int& k, int target, vector<vector<int>>& dp) {
     if (n == 0 && target == 0) return 1;
     if (n <= 0 || target <= 0) return 0;
 

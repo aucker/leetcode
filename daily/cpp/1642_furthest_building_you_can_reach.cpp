@@ -3,7 +3,7 @@ using namespace std;
 
 class Solution {
  public:
-  int furthestBuilding(vector<int> &heights, int bricks, int ladders) {
+  int furthestBuilding(vector<int>& heights, int bricks, int ladders) {
     // Priority Queue for storing the bricks used in decreasing order
     priority_queue<int> pq;
 

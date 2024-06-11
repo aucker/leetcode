@@ -3,7 +3,7 @@ using namespace std;
 
 class Solution {
  public:
-  vector<int> temperature(vector<int> &T) {
+  vector<int> temperature(vector<int>& T) {
     vector<int> res(T.size(), 0);
     stack<int> st;
     for (int i = 0; i < T.size(); ++i) {
@@ -28,7 +28,7 @@ class Solution {
 };
 
 int main() {
-  Solution *s = new Solution();
+  Solution* s = new Solution();
   s->test1();
   return 0;
 }
