@@ -9,8 +9,7 @@ class Solution {
    *
    * @param temperatureA
    * @param temperatureB
-   * @return int
-   */
+   * @return int */
   int temperatureTrend(vector<int>& temperatureA, vector<int>& temperatureB) {
     auto cmp = [](int x, int y) { return (x > y) - (x < y); };
 
