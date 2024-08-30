@@ -11,8 +11,7 @@ class Solution {
       if (corridor[i] == 'S') {
         chairs++;
 
-        while (++i < corridor.size() && corridor[i] != 'S')
-          ;
+        while (++i < corridor.size() && corridor[i] != 'S');
         // the while increment i and check each character in the corridor
         // string. the loop continues until the end of the string or until the
         // next chair.
