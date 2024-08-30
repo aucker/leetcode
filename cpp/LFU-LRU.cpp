@@ -1,4 +1,5 @@
-#include <bits/stdc++.h>
+#include <unordered_map>
+#include <vector>
 using namespace std;
 
 /**
@@ -90,7 +91,11 @@ class LFUCache {
   void put(int key, int value) {
     if (size == 0) return;
     if (get(key) != -1) {
-      cache[key]->val = value;
+      Node* node = cache[key];
+      node->val = value;
+      node->freq++;
+      deleteNode(node);
+      addHead(node);
     } else {
       if (cache.size() == size) {
         popTail();
@@ -160,7 +165,7 @@ class LRUCache {
     node->prev->next = node->next;
   }
 
-  Node* popTail() {
+  void popTail() {
     Node* node = tail->prev;
     deleteNode(node);
     cache.erase(node->key);
