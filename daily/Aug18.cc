@@ -11,6 +11,6 @@ class Solution {
    * @return true, false
    */
   bool checkRecord(string s) {
-    return ranges::counts(s, 'A') && s.find("LLL") == string::npos;
+    return ranges::count(s, 'A') && s.find("LLL") == string::npos;
   }
 };
