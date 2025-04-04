@@ -11,3 +11,7 @@ edition = "2021"
 [lib]
 doctest = false
 test = true
+
+[[bin]]
+name = "lca_deepest_leaves"
+path = "src/tree/25-Apr4.rs"
