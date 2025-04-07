@@ -11,15 +11,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Add Google Test
 add_subdirectory(third_party/googletest)
 
-# Add source files
-file(GLOB_RECURSE SOURCES "src/*.cpp" "src/**/*.cpp")
-foreach(SOURCE ${SOURCES})
-    get_filename_component(EXECUTABLE_NAME ${SOURCE} NAME_WE)
-    add_executable(${EXECUTABLE_NAME} ${SOURCE})
-endforeach()
-
 # Add tests
 add_subdirectory(tests)
 
 # Specify a build directory
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+# Option to specify which files to build
+option(BUILD_ALL "Build all files" OFF)
+if(NOT BUILD_ALL)
+    set(BUILD_TARGET "" CACHE STRING "Specific target to build (e.g., 25-Apr6_test)")
+endif()
