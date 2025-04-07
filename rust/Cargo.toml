@@ -19,3 +19,4 @@ path = "src/tree/25-Apr4.rs"
 [[bin]]
 name = "subset_xor_sum"
 path = "src/bit_manipulation/25-Apr5.rs"
+
